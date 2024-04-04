@@ -45,7 +45,7 @@ sequelize
     console.log("Sequelize Initialised!!");
 
     app.get("/", (req, res) => {
-      res.send("Bienvenue sur la page d'accueil !");
+      res.send("<p class='underline'>Bienvenue sur la page d'accueil !</p>");
     });
     app.use("/user", UserRoutes);
 
@@ -56,3 +56,4 @@ sequelize
   .catch((err) => {
     console.log("Sequelize Initialisation threw an error:", err);
   });
+

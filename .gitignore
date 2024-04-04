@@ -1,2 +1,3 @@
 node_modules
 dbConnect.js
+.DS_Store
