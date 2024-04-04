@@ -1,67 +1,59 @@
 const express = require('express');
 const app = express();
-const port = 3000;
 const { Sequelize } = require("sequelize");
 
-// Middleware pour parser le corps des requêtes en JSON
+// port is defined in the config.js file
+const { port } = require("./config");
+const PORT = port;
+
+// Importing the Routes
+const UserRoutes = require("./users/routes");
+
+// Importing the UserModel
+const UserModel = require("./common/models/User");
+
+
 app.use(express.json());
 
-// Liste des utilisateurs (simulée pour cet exemple)
-let users = [
-  { id: 1, name: 'Jeremy' },
-  { id: 2, name: 'Anais' },
-  { id: 3, name: 'Vincent' },
-  { id: 4, name: 'Marie' },
-  { id: 5, name: 'Pauline'},
-  { id: 6, name: 'Mickael' },
-  { id: 7, name: 'Laurent' },
-  { id: 8, name: 'Sophie' },
-  { id: 9, name: 'Lucas' },
-  { id: 10, name: 'Julie'}
-];
-
-app.get('/', (req, res) => {
-  res.send('Bienvenue sur la page d\'accueil !');
+// Database Connection
+const sequelize = new Sequelize({
+  dialect: "mysql",
+  database: "silver-micro",
+  username: "root",
+  password: "root",
+  host: "localhost",
+  port: 8888,
+  logging : false
 });
 
-app.get('/api/users', (req, res) => {
-  res.json(users);
-});
+// test the connection
+try {
+  sequelize.authenticate();
+  console.log("Connection has been established successfully. TOTO");
+}
+catch (error) {
+  console.error("Unable to connect to the database:", error);
+}
 
-// Récupérer un utilisateur par son ID
-app.get('/api/users/:id', (req, res) => {
-  const id = parseInt(req.params.id);
-  const user = users.find(u => u.id === id);
-  if (user) {
-    res.json(user);
-  } else {
-    res.status(404).json({ message: 'Utilisateur non trouvé' });
-  }
-});
+// Initialising the UserModel
+UserModel.initialise(sequelize);
 
-// Ajouter un nouvel utilisateur
-app.post('/api/users', (req, res) => {
-  const newUser = req.body;
-  users.push(newUser);
-  res.status(201).json(newUser);
-});
+//Syncing the model with the database
 
-// Mettre à jour un utilisateur existant
-app.put('/api/users/:id', (req, res) => {
-  const id = parseInt(req.params.id);
-  const updatedUser = req.body;
-  users = users.map(user => (user.id === id ? { ...user, ...updatedUser } : user));
-  res.json(updatedUser);
-});
-
-// Supprimer un utilisateur
-app.delete('/api/users/:id', (req, res) => {
-  const id = parseInt(req.params.id);
-  users = users.filter(user => user.id !== id);
-  res.status(204).end();
-});
-
-// Démarrer le serveur
-app.listen(port, () => {
-  console.log(`Le serveur écoute sur le port ${port}`);
-});
+sequelize
+  .sync()
+  .then(() => {
+    console.log("Sequelize Initialised!!");
+  
+  app.get('/', (req, res) => {
+    res.send('Bienvenue sur la page d\'accueil !');
+  });
+  app.use("/user", UserRoutes);
+  
+  app.listen(port, () => {
+    console.log(`Le serveur écoute sur le port ${port}`);
+  });
+})
+  .catch((err) => {
+    console.log("Sequelize Initialisation threw an error:", err);
+  });
