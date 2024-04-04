@@ -1,6 +1,25 @@
 const UserModel = require("../../common/models/User");
 
 module.exports = {
+
+  createUser: (req, res) => {
+    const { body: user } = req;
+
+    UserModel.createUser(user)
+      .then((user) => {
+        return res.status(200).json({
+          status: true,
+          data: user.toJSON(),
+        });
+      })
+      .catch((err) => {
+        return res.status(500).json({
+          status: false,
+          error: err,
+        });
+      });
+  },
+// =======================================================================
   getUser: (req, res) => {
     const {
       user: { userId },
@@ -20,7 +39,7 @@ module.exports = {
         });
       });
   },
-
+// =======================================================================
   updateUser: (req, res) => {
     const {
       user: { userId },
@@ -55,7 +74,7 @@ module.exports = {
         });
       });
   },
-
+// =======================================================================
   deleteUser: (req, res) => {
     const {
       params: { userId },
@@ -77,7 +96,7 @@ module.exports = {
         });
       });
   },
-
+// =======================================================================
   getAllUsers: (req, res) => {
     UserModel.findAllUsers(req.query)
       .then((users) => {
@@ -93,7 +112,7 @@ module.exports = {
         });
       });
   },
-
+// =======================================================================
   changeRole: (req, res) => {
     const {
       params: { userId },
@@ -117,4 +136,5 @@ module.exports = {
         });
       });
   },
+
 };
