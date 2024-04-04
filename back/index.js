@@ -7,7 +7,6 @@ const { port } = require("./config");
 
 const { username, password, db_port, host } = require("./dbConnect");
 
-
 // Importing the Routes
 const UserRoutes = require("./users/routes");
 
