@@ -1,15 +1,19 @@
 import React from 'react';
 import './index.css';
-import ValidateButton from './component/ValidateButton';
+import AuthForm from './component/AuthForm';
+import banner from './assets/banner.jpg';
 
 
 function App() {
  
-
   return (
-    <div className='m-5'>
-      <h1 className="text-3xl font-bold underline text-green-900"> Hello world! </h1>
-      <ValidateButton label='submit' />
+    <div className='flex justify-center flex-col h-screen bg-black'>
+      <div className='h-3/5 flex'>
+        <img src= {banner} alt='banner' className='w-full h-full'/>
+      </div>
+      <div className='flex h-2/5 max-[430px]:w-screen lg:w-1/4 justify-center items-center rounded-t-xl'>
+      <AuthForm />
+      </div>
     </div>
   )
 }
