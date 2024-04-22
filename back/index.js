@@ -46,6 +46,8 @@ sequelize
     app.get("/", (req, res) => {
       res.send("<p class='underline'>Bienvenue sur la page d'accueil !</p>");
     });
+
+    
     app.use("/user", UserRoutes);
 
     app.listen(port, () => {
