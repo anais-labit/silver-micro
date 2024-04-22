@@ -4,7 +4,7 @@ const { Sequelize } = require("sequelize");
 
 // port is defined in the config.js file
 const { port } = require("./config");
-
+const AuthRoute = require("./autorization/routes")
 const { username, password, db_port, host } = require("./dbConnect");
 
 // Importing the Routes
@@ -47,7 +47,8 @@ sequelize
       res.send("<p class='underline'>Bienvenue sur la page d'accueil !</p>");
     });
 
-    
+    app.use('/auth', AuthRoute);
+
     app.use("/user", UserRoutes);
 
     app.listen(port, () => {
