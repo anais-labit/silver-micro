@@ -1,32 +1,26 @@
-const { roles } = require('../../config');
+const { roles } = require("../../config");
 
 module.exports = {
-  type: 'object',
-  properties: { 
+  type: "object",
+  properties: {
     email: {
-      type: 'string',
-      pattern: "^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$"
+      type: "string",
+      pattern: "^[^\s@]+@[^\s@]+\.[^\s@]+$",
     },
     firstName: {
-        type: 'string'
-      },
-      lastName: {
-        type: 'string'
-      },
+      type: "string",
+    },
+    lastName: {
+      type: "string",
+    },
     password: {
-      type: 'string'
+      type: "string",
     },
     role: {
-      type: 'string',
-      enum: Object.values(roles)
-    }
+      type: "string",
+      enum: Object.values(roles),
+    },
   },
-  required: [
-    'email',
-    'firstName',
-    'lastName',
-    'password',
-    'role'
-  ],
-  additionalProperties: false
+  required: ["email", "firstName", "lastName", "password"],
+  additionalProperties: true,
 };
