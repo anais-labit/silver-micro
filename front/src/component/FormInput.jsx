@@ -1,9 +1,25 @@
-import React from 'react';
+// FormInput.js
+import React, { useState } from "react";
 
-export default function FormInput(props) {
-  return /*#__PURE__*/React.createElement("input", {
-    className: "border-2 border-gray-300 p-2 rounded-xl",
-    type: "text",
-    placeholder: props.placeholder
-  });
-} // Path: front/src/component/ValidateButton.jsx
+const FormInput = ({ placeholder, name, value, onChange }) => {
+  const [inputValue, setInputValue] = useState(value);
+
+  const handleChange = (e) => {
+    const newValue = e.target.value;
+    setInputValue(newValue);
+    onChange({ target: { name, value: newValue } });
+  };
+
+  return (
+    <input
+      type="text"
+      placeholder={placeholder}
+      name={name}
+      value={inputValue}
+      onChange={handleChange}
+      className= "border-2 border-gray-300 p-2 rounded-xl"
+    />
+  );
+};
+
+export default FormInput;

@@ -22,8 +22,22 @@ export default function AuthForm() {
     confPwd: "",
   });
 
+  const handleSignUp = (e) => {
+    const { name, value } = e.target;
+    setSignUpForm((prevState) => ({
+      ...prevState,
+      [name]: value,
+    }));
+  };
+  
   const handleSignUpSubmit = async (e) => {
     e.preventDefault();
+   
+    if (signUpForm.password !== signUpForm.confPwd) {
+      console.error("Passwords do not match");
+      return;
+    }
+
     try {
       const response = await fetch(PATH + "/auth/register", {
         method: "POST",
@@ -36,10 +50,11 @@ export default function AuthForm() {
         throw new Error("Erreur lors de l'inscription");
       }
       console.log("Inscription réussie");
-    } catch {
+      // Ajoutez ici la logique pour rediriger l'utilisateur vers la page de connexion ou effectuer d'autres actions nécessaires après l'inscription réussie
+    } catch (error){
       console.error("Erreur", error.message);
     }
-  };
+ };
 
   return (
     <div className="flex flex-col items-center justify-center w-full h-full space-y-4 bg-white rounded-t-xl">
@@ -57,13 +72,9 @@ export default function AuthForm() {
               />
               <FormInput
                 placeholder="Firstname"
+                name="firstName"
                 value={signUpForm.firstName}
-                onChange={(e) => {
-                  setSignUpForm({
-                    ...signUpForm,
-                    firstName: e.target.value,
-                  });
-                }}
+                onChange={handleSignUp}
               />
             </div>
             <div className="flex flex-row items-center space-y-2 relative">
@@ -74,13 +85,9 @@ export default function AuthForm() {
               />
               <FormInput
                 placeholder="Lastname"
+                name="lastName"
                 value={signUpForm.lastName}
-                onChange={(e) => {
-                  setSignUpForm({
-                    ...signUpForm,
-                    lastName: e.target.value,
-                  });
-                }}
+                onChange={handleSignUp}
               />
             </div>
           </div>
@@ -94,13 +101,9 @@ export default function AuthForm() {
               />
               <FormInput
                 placeholder="Password"
+                name="password"
                 value={signUpForm.password}
-                onChange={(e) => {
-                  setSignUpForm({
-                    ...signUpForm,
-                    password: e.target.value,
-                  });
-                }}
+                onChange={handleSignUp}
               />
             </div>
             <div className="flex flex-row items-center space-y-2 relative">
@@ -111,13 +114,9 @@ export default function AuthForm() {
               />
               <FormInput
                 placeholder="Confirm Password"
+                name="confPwd"
                 value={signUpForm.confPwd}
-                onChange={(e) => {
-                  setSignUpForm({
-                    ...signUpForm,
-                    confPwd: e.target.value,
-                  });
-                }}
+                onChange={handleSignUp}
               />
             </div>
           </div>
@@ -130,13 +129,9 @@ export default function AuthForm() {
               />
               <FormInput
                 placeholder="Email"
+                name="email"
                 value={signUpForm.email}
-                onChange={(e) => {
-                  setSignUpForm({
-                    ...signUpForm,
-                    email: e.target.value,
-                  });
-                }}
+                onChange={handleSignUp}
               />
             </div>
 
