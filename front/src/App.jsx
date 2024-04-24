@@ -1,23 +1,19 @@
 import React from 'react';
 import './index.css';
-import AuthForm from './component/AuthForm';
-import banner from './assets/banner.jpg';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import Restaurant from './pages/Restaurant';
+import Authentication from './pages/Authentication';
 
 
 function App() {
-
   return (
-    <div className='flex justify-center items-center'>
-      <div className='flex justify-center items-center flex-col max-[430px]:h-screen lg:h-screen bg-black max-[430px]:border-0 lg:border-2 border-gray-300 max-[430px]:w-full lg:w-1/4'>
-        <div className='h-3/5 flex w-full justify-center items-center'>
-          <img src={banner} alt='banner' className='max-[430px]:w-full lg:w-full h-full brightness-125' />
-        </div>
-        <div className='flex h-full max-[430px]:w-screen lg:w-full justify-center items-center rounded-t-xl'>
-          <AuthForm />
-        </div>
-      </div>
-    </div>
+    <Router>
+    <Routes>
+      <Route path="/" element={<Authentication />} />
+      <Route path="/restaurants" element={<Restaurant />} />
+    </Routes>
+    </Router>
   )
 }
 
-export default App
+export default App;
