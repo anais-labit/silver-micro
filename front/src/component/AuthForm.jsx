@@ -33,29 +33,28 @@ export default function AuthForm() {
   const handleSignUpSubmit = async (e) => {
     e.preventDefault();
 
-    console.log(signUpForm);
+    if (signUpForm.password !== signUpForm.confPwd) {
+      console.error("Passwords do not match");
+      return;
+    }
 
-    // if (signUpForm.password !== signUpForm.confPwd) {
-    //   console.error("Passwords do not match");
-    //   return;
-    // }
+    try {
+      const response = await fetch(PATH + "/auth/register", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(signUpForm),
+      });
 
-    // try {
-    //   const response = await fetch(PATH + "/auth/register", {
-    //     method: "POST",
-    //     headers: {
-    //       "Content-Type": "application/json",
-    //     },
-    //     body: JSON.stringify(signUpForm),
-    //   });
-    //   if (!response.ok) {
-    //     throw new Error("Erreur lors de l'inscription");
-    //   }
-    //   console.log("Inscription réussie");
-    //   // Ajoutez ici la logique pour rediriger l'utilisateur vers la page de connexion ou effectuer d'autres actions nécessaires après l'inscription réussie
-    // } catch (error) {
-    //   console.error("Erreur", error.message);
-    // }
+      const errorData = await response.json();
+      if (errorData.status === false) {
+        throw new Error(errorData.error.message);
+      }
+      console.log("Inscription réussie");
+    } catch (error) {
+      console.error("Erreur", error.message);
+    }
   };
 
   const handleSignIn = (e) => {
@@ -69,7 +68,7 @@ export default function AuthForm() {
   const handleSignInSubmit = async (e) => {
     e.preventDefault();
 
-    const signInData = {signInForm }; 
+    const signInData = { signInForm };
     console.log(signInData);
 
     try {
@@ -77,12 +76,12 @@ export default function AuthForm() {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          
         },
         body: JSON.stringify(signInForm),
       });
       if (!response.ok) {
-        throw new Error("Utilisateur inconnu");
+        const errorData = await response.json();
+        throw new Error(errorData.error.message);
       }
       console.log("Connexion réussie");
     } catch (error) {
@@ -105,6 +104,7 @@ export default function AuthForm() {
                 alt="User"
               />
               <FormInput
+                type="text"
                 placeholder="Firstname"
                 name="firstName"
                 value={signUpForm.firstName}
@@ -118,6 +118,7 @@ export default function AuthForm() {
                 alt="User"
               />
               <FormInput
+                type="text"
                 placeholder="Lastname"
                 name="lastName"
                 value={signUpForm.lastName}
@@ -134,6 +135,7 @@ export default function AuthForm() {
                 alt="Password"
               />
               <FormInput
+                type="password"
                 placeholder="Password"
                 name="password"
                 value={signUpForm.password}
@@ -147,6 +149,7 @@ export default function AuthForm() {
                 alt="Password"
               />
               <FormInput
+                type="password"
                 placeholder="Confirm Password"
                 name="confPwd"
                 value={signUpForm.confPwd}
@@ -162,6 +165,7 @@ export default function AuthForm() {
                 alt="Mail"
               />
               <FormInput
+                type="text"
                 placeholder="Email"
                 name="email"
                 value={signUpForm.email}
@@ -200,6 +204,7 @@ export default function AuthForm() {
               alt="User"
             />
             <FormInput
+              type="text"
               placeholder="Email"
               name="email"
               value={signInForm.email}
@@ -213,6 +218,7 @@ export default function AuthForm() {
               alt="Password"
             />
             <FormInput
+              type="password"
               placeholder="Password"
               name="password"
               value={signInForm.password}
