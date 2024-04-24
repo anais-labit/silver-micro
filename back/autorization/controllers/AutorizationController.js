@@ -6,11 +6,12 @@ const UserModel = require("../../common/models/User");
 const { roles, jwtSecret, jwtExpirationInSeconds } = require("../../config");
 
 // Generates an Access Token using email and userId for the user's authentication
-const generateAccessToken = (email, userId) => {
+const generateAccessToken = (email, userId, role) => {
   return jwt.sign(
     {
       userId,
       email,
+      role,
     },
     jwtSecret,
     {

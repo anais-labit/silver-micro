@@ -165,7 +165,7 @@ export default function AuthForm() {
                 alt="Mail"
               />
               <FormInput
-                type="text"
+                type="email"
                 placeholder="Email"
                 name="email"
                 value={signUpForm.email}
@@ -204,7 +204,7 @@ export default function AuthForm() {
               alt="User"
             />
             <FormInput
-              type="text"
+              type="email"
               placeholder="Email"
               name="email"
               value={signInForm.email}

@@ -3,6 +3,7 @@ module.exports = {
   properties: {
     email: {
       type: "string",
+      pattern: "^[^\s@]+@[^\s@]+\.[^\s@]+$",
     },
     password: {
       type: "string",
