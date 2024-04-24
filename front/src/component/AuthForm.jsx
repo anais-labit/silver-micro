@@ -10,7 +10,7 @@ const PATH = import.meta.env.VITE_PATH;
 export default function AuthForm() {
   const [showSignUp, setShowSignUp] = useState(false);
   const [showSignIn, setShowSignIn] = useState(true);
-  const [token, setToken] = useState(null);
+  // const [token, setToken] = useState(null);
   const [signInForm, setSignInForm] = useState({
     email: "",
     password: "",
@@ -69,7 +69,6 @@ export default function AuthForm() {
   const handleSignInSubmit = async (e) => {
     e.preventDefault();
 
-
     const signInData = { signInForm };
     console.log(signInData);
 
@@ -85,33 +84,25 @@ export default function AuthForm() {
         const errorData = await response.json();
         throw new Error(errorData.error.message);
       }
-      // const { token } = response.data;
 
-    
       const data = await response.json();
-      const jwtToken = data.data.token;
-      const user = data.data.user;
+      const { token, user } = data.data;
+
       const userInfo = {
         firstName: user.firstName,
         lastName: user.lastName,
         email: user.email,
         role: user.role,
         id: user.id,
-        jwtToken : data.data.token
-      }
-      
-      localStorage.setItem('firstname', userInfo.firstName);
-      localStorage.setItem('lastname', userInfo.lastName);
-      localStorage.setItem('email', userInfo.email);
-      localStorage.setItem('role', userInfo.role);
-      localStorage.setItem('id', userInfo.id);
-      localStorage.setItem('jwtToken', userInfo.jwtToken); 
+        jwtToken: token,
+      };
 
-      setToken(jwtToken); 
-      const jwtToken2 = localStorage.getItem('jwtToken');
+      Object.entries(userInfo).forEach(([key, value]) => {
+        localStorage.setItem(key, value);
+      });
 
-      
-      
+      // setToken(token);
+
       console.log("Connexion réussie");
     } catch (error) {
       console.error("Erreur", error.message);
