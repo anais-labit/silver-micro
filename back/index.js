@@ -1,18 +1,26 @@
 const express = require("express");
+const cors = require("cors");
+
 const app = express();
 const { Sequelize } = require("sequelize");
 
 // port is defined in the config.js file
 const { port } = require("./config");
-
+const AuthRoute = require("./autorization/routes");
 const { username, password, db_port, host } = require("./dbConnect");
-
 
 // Importing the Routes
 const UserRoutes = require("./users/routes");
 
 // Importing the UserModel
 const UserModel = require("./common/models/User");
+
+app.use(
+  cors({
+    origin: "http://localhost:5173",
+    credentials: true,
+  })
+);
 
 app.use(express.json());
 
@@ -47,6 +55,9 @@ sequelize
     app.get("/", (req, res) => {
       res.send("<p class='underline'>Bienvenue sur la page d'accueil !</p>");
     });
+
+    app.use("/auth", AuthRoute);
+
     app.use("/user", UserRoutes);
 
     app.listen(port, () => {
@@ -56,4 +67,3 @@ sequelize
   .catch((err) => {
     console.log("Sequelize Initialisation threw an error:", err);
   });
-
