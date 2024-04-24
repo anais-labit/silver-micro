@@ -69,6 +69,7 @@ export default function AuthForm() {
   const handleSignInSubmit = async (e) => {
     e.preventDefault();
 
+
     const signInData = { signInForm };
     console.log(signInData);
 
