@@ -1,7 +1,7 @@
 // FormInput.js
 import React, { useState } from "react";
 
-const FormInput = ({ placeholder, name, value, onChange }) => {
+const FormInput = ({ placeholder, name, value, type, onChange }) => {
   const [inputValue, setInputValue] = useState(value);
 
   const handleChange = (e) => {
@@ -12,7 +12,7 @@ const FormInput = ({ placeholder, name, value, onChange }) => {
 
   return (
     <input
-      type="text"
+      type={type}
       placeholder={placeholder}
       name={name}
       value={inputValue}

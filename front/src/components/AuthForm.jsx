@@ -29,10 +29,10 @@ export default function AuthForm() {
       [name]: value,
     }));
   };
-  
+
   const handleSignUpSubmit = async (e) => {
     e.preventDefault();
-   
+
     if (signUpForm.password !== signUpForm.confPwd) {
       console.error("Passwords do not match");
       return;
@@ -46,15 +46,48 @@ export default function AuthForm() {
         },
         body: JSON.stringify(signUpForm),
       });
-      if (!response.ok) {
-        throw new Error("Erreur lors de l'inscription");
+
+      const errorData = await response.json();
+      if (errorData.status === false) {
+        throw new Error(errorData.error.message);
       }
       console.log("Inscription réussie");
-      // Ajoutez ici la logique pour rediriger l'utilisateur vers la page de connexion ou effectuer d'autres actions nécessaires après l'inscription réussie
-    } catch (error){
+    } catch (error) {
       console.error("Erreur", error.message);
     }
- };
+  };
+
+  const handleSignIn = (e) => {
+    const { name, value } = e.target;
+    setSignInForm((prevState) => ({
+      ...prevState,
+      [name]: value,
+    }));
+  };
+
+  const handleSignInSubmit = async (e) => {
+    e.preventDefault();
+
+    const signInData = { signInForm };
+    console.log(signInData);
+
+    try {
+      const response = await fetch(PATH + "/auth/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(signInForm),
+      });
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.error.message);
+      }
+      console.log("Connexion réussie");
+    } catch (error) {
+      console.error("Erreur", error.message);
+    }
+  };
 
   return (
     <div className="flex flex-col items-center justify-center w-full h-full space-y-4 bg-white rounded-t-xl">
@@ -71,6 +104,7 @@ export default function AuthForm() {
                 alt="User"
               />
               <FormInput
+                type="text"
                 placeholder="Firstname"
                 name="firstName"
                 value={signUpForm.firstName}
@@ -84,6 +118,7 @@ export default function AuthForm() {
                 alt="User"
               />
               <FormInput
+                type="text"
                 placeholder="Lastname"
                 name="lastName"
                 value={signUpForm.lastName}
@@ -100,6 +135,7 @@ export default function AuthForm() {
                 alt="Password"
               />
               <FormInput
+                type="password"
                 placeholder="Password"
                 name="password"
                 value={signUpForm.password}
@@ -113,6 +149,7 @@ export default function AuthForm() {
                 alt="Password"
               />
               <FormInput
+                type="password"
                 placeholder="Confirm Password"
                 name="confPwd"
                 value={signUpForm.confPwd}
@@ -128,6 +165,7 @@ export default function AuthForm() {
                 alt="Mail"
               />
               <FormInput
+                type="email"
                 placeholder="Email"
                 name="email"
                 value={signUpForm.email}
@@ -155,14 +193,23 @@ export default function AuthForm() {
         </form>
       )}
       {showSignIn && (
-        <form className="flex flex-col items-center space-y-2">
+        <form
+          onSubmit={handleSignInSubmit}
+          className="flex flex-col items-center space-y-2"
+        >
           <div className="flex flex-row items-center space-y-2 relative">
             <img
               className="absolute right-1 bottom-2"
               src={userImg}
               alt="User"
             />
-            <FormInput placeholder="Email" />
+            <FormInput
+              type="email"
+              placeholder="Email"
+              name="email"
+              value={signInForm.email}
+              onChange={handleSignIn}
+            />
           </div>
           <div className="flex flex-row items-center space-y-2 relative">
             <img
@@ -170,7 +217,13 @@ export default function AuthForm() {
               src={lockImg}
               alt="Password"
             />
-            <FormInput placeholder="Password" />
+            <FormInput
+              type="password"
+              placeholder="Password"
+              name="password"
+              value={signInForm.password}
+              onChange={handleSignIn}
+            />
           </div>
           <div className="flex items-center space-y-4 w-full pt-2">
             <ValidateButton className="space-y-2" label="Sign in" />

@@ -6,11 +6,12 @@ const UserModel = require("../../common/models/User");
 const { roles, jwtSecret, jwtExpirationInSeconds } = require("../../config");
 
 // Generates an Access Token using email and userId for the user's authentication
-const generateAccessToken = (email, userId) => {
+const generateAccessToken = (email, userId, role) => {
   return jwt.sign(
     {
       userId,
       email,
+      role,
     },
     jwtSecret,
     {
@@ -47,13 +48,13 @@ module.exports = {
       .then((user) => {
         // Generating an AccessToken for the user, which will be
         // required in every subsequent request.
-        const accessToken = generateAccessToken(payload.email, user.id);
+        // const accessToken = generateAccessToken(payload.email, user.id);
 
         return res.status(200).json({
           status: true,
           data: {
             user: user.toJSON(),
-            token: accessToken,
+            // token: accessToken,
           },
         });
       })
