@@ -47,13 +47,13 @@ module.exports = {
       .then((user) => {
         // Generating an AccessToken for the user, which will be
         // required in every subsequent request.
-        const accessToken = generateAccessToken(payload.email, user.id);
+        // const accessToken = generateAccessToken(payload.email, user.id);
 
         return res.status(200).json({
           status: true,
           data: {
             user: user.toJSON(),
-            token: accessToken,
+            // token: accessToken,
           },
         });
       })

@@ -1,16 +1,14 @@
 module.exports = {
-    type: 'object',
-    properties: {
-      email: {
-        type: 'string'
-      },
-      password: {
-        type: 'string'
-      }
+  type: "object",
+  properties: {
+    email: {
+      type: "string",
+      pattern: "^[^\s@]+@[^\s@]+\.[^\s@]+$",
     },
-    required: [
-      'email',
-      'password'
-    ],
-    additionalProperties: false
-  };
+    password: {
+      type: "string",
+    },
+  },
+  required: ["email", "password"],
+  additionalProperties: false,
+};
