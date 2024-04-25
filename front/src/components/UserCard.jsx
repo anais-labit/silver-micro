@@ -5,7 +5,7 @@ export default function UserCard() {
     const userInfo = 
         {
             name: "John Doe",
-            role: "Admin",
+            role: "User",
         }
     return (
         <div className="flex flex-col bg-blue-200 h-24 w-42">

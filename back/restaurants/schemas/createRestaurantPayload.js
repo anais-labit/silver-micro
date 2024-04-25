@@ -16,10 +16,10 @@ module.exports = {
       type: "string",
     },
     menu: {
-      type: "json",
+      type: "object",
     },
     rate: {
-      type: "float",
+      type: "number",
     },
     id_owner: {
       type: "integer",
