@@ -20,7 +20,7 @@ const RestaurantModel = {
     type: DataTypes.STRING,
     allowNull: true,
   },
-  descritpion: {
+  description: {
     type: DataTypes.STRING,
     allowNull: true,
   },

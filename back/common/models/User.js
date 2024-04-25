@@ -33,7 +33,7 @@ const UserModel = {
 
 module.exports = {
   initialise: (sequelize) => {
-    this.model = sequelize.define("user", UserModel);
+    this.model = sequelize.define("users", UserModel);
   },
 
   createUser: (user) => {

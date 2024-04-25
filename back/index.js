@@ -8,16 +8,13 @@ const { Sequelize } = require("sequelize");
 const { port } = require("./config");
 const { username, password, db_port, host } = require("./dbConnect");
 
+// Importing routes
 const AuthRoute = require("./autorization/routes");
+const UsersRoutes = require("./routes/usersRoutes");
+const RootsRoutes = require("./routes/rootsRoutes");
 
-// Importing the Routes
-const UserRoutes = require("./users/routes");
-// Importing the UserModel
+// Importing models
 const UserModel = require("./common/models/User");
-
-// Importing the Routes
-const RestaurantRoutes = require("./restaurants/routes");
-// Importing the RestaurantModel
 const RestaurantModel = require("./common/models/Restaurant");
 
 app.use(
@@ -63,8 +60,8 @@ sequelize
     });
 
     app.use("/auth", AuthRoute);
-    app.use("/user", UserRoutes);
-    app.use("/root", RestaurantRoutes);
+    app.use("/user", UsersRoutes);
+    app.use("/root", RootsRoutes);
 
     app.listen(port, () => {
       console.log(`Le serveur écoute sur le port ${port}`);
