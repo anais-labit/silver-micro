@@ -21,13 +21,13 @@ router.get("/", [IsAuthenticatedMiddleware.check], UserController.getUser);
 
 // router.patch('/update/:userId', [IsAuthenticatedMiddleware.check], UserController.updateUser)
 
-router.patch(
-    "/",
-    [
-      IsAuthenticatedMiddleware.check,
-      SchemaValidationMiddleware.verify(updateUserPayload),
-    ],
-    UserController.updateUser
-  );
+// router.patch(
+//     "/",
+//     [
+//       IsAuthenticatedMiddleware.check,
+//       SchemaValidationMiddleware.verify(updateUserPayload),
+//     ],
+//     UserController.updateUser
+//   );
 
 module.exports = router;

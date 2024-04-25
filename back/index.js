@@ -6,14 +6,19 @@ const { Sequelize } = require("sequelize");
 
 // port is defined in the config.js file
 const { port } = require("./config");
-const AuthRoute = require("./autorization/routes");
 const { username, password, db_port, host } = require("./dbConnect");
+
+const AuthRoute = require("./autorization/routes");
 
 // Importing the Routes
 const UserRoutes = require("./users/routes");
-
 // Importing the UserModel
 const UserModel = require("./common/models/User");
+
+// Importing the Routes
+const RestaurantRoutes = require("./restaurants/routes");
+// Importing the RestaurantModel
+const RestaurantModel = require("./common/models/Restaurant");
 
 app.use(
   cors({
@@ -43,8 +48,9 @@ try {
   console.error("Unable to connect to the database:", error);
 }
 
-// Initialising the UserModel
+// Initialising models
 UserModel.initialise(sequelize);
+RestaurantModel.initialise(sequelize);
 
 //Syncing the model with the database
 sequelize
@@ -57,8 +63,8 @@ sequelize
     });
 
     app.use("/auth", AuthRoute);
-
     app.use("/user", UserRoutes);
+    app.use("/root", RestaurantRoutes);
 
     app.listen(port, () => {
       console.log(`Le serveur écoute sur le port ${port}`);
