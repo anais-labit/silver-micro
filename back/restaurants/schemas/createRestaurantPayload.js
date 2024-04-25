@@ -26,5 +26,5 @@ module.exports = {
     },
   },
   required: ["name", "id_owner"],
-  additionalProperties: false,
+  additionalProperties: true,
 };
