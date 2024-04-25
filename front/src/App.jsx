@@ -16,12 +16,12 @@ function App() {
       <Route path="/restaurants/:title" element={<RestaurantDetails />} />
       <Route path="/root/panel" element={< RootPanel />} />
       {/* <Route path="/root/panel/restaurants" element={< RootPanel />} />
-      <Route path="/root/panel/users" element={< RootPanel/>} />
-      <Route path="/root/panel/bookings" element={< RootPanel/>} /> */}
-      <Route path="/root/panel/restaurants/create" element={< CreateRestaurant/>} />
-      {/* <Route path="/owner/panel" element={< OwnerPanel />} />
-      <Route path="/owner/panel/restaurants" element={< OwnerRestaurants />} />
-      <Route path="/owner/panel/bookings" element={< OwnerBookings />} /> */}
+      <Route path="/root/panel/users" element={< RootPanel/>} /> */}
+      {/* <Route path="/root/panel/bookings" element={< RootPanel/>} /> */}
+      {/* <Route path="/root/panel/restaurants/create" element={< CreateRestaurant/>} /> */}
+      {/* <Route path="/owner/panel" element={< OwnerPanel />} /> */}
+      {/* <Route path="/owner/panel/restaurants" element={< OwnerRestaurants />} /> */}
+      {/* <Route path="/owner/panel/bookings" element={< OwnerBookings />} />  */}
     </Routes>
     </Router>
   )
