@@ -6,8 +6,6 @@ module.exports = {
     email: {
       type: "string",
       pattern: "^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$",
-      type: "string",
-      pattern: "^[^\s@]+@[^\s@]+\.[^\s@]+$",
     },
     firstName: {
       type: "string",
