@@ -6,21 +6,6 @@ module.exports = {
     name: {
       type: "string",
     },
-    pax_capacity: {
-      type: "integer",
-    },
-    address: {
-      type: "string",
-    },
-    description: {
-      type: "string",
-    },
-    menu: {
-      type: "object",
-    },
-    rate: {
-      type: "number",
-    },
     id_owner: {
       type: "integer",
     },
