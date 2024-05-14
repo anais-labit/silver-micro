@@ -10,11 +10,10 @@ const updateUserPayload = require("../users/schemas/updateUserPayload");
 const changeRolePayload = require("../users/schemas/changeRolePayload");
 const { roles } = require("../config");
 
-// router.get("/", UserController.getUser);
-
-// router.post('/register', UserController.createUser);
-
 router.get("/", [IsAuthenticatedMiddleware.check], UserController.getUser);
+router.get("/bookings", [IsAuthenticatedMiddleware.check], UserController.getUserBookings);
+
+
 
 // router.patch('/update/:userId', [IsAuthenticatedMiddleware.check], UserController.updateUser)
 

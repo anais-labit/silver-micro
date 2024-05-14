@@ -12,6 +12,7 @@ const registerUserPayload = require("../autorization/schemas/registerPayload");
 
 const { roles } = require("../config");
 
+
 router.get(
   "/panel/restaurants",
   [IsAuthenticatedMiddleware.check],
