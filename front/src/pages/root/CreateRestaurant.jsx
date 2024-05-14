@@ -24,10 +24,13 @@ export default function CreateRestaurant() {
     e.preventDefault();
 
     try {
+      const jwtToken = localStorage.getItem("jwtToken");
+
       const response = await fetch(PATH + "/root/panel/restaurants/create", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
+          Authorization: `Bearer ${jwtToken}`,
         },
         body: JSON.stringify(createRestaurantForm),
       });
