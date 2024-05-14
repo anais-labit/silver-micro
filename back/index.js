@@ -12,6 +12,7 @@ const { username, password, db_port, host } = require("./dbConnect");
 const AuthRoute = require("./autorization/routes");
 const UsersRoutes = require("./routes/usersRoutes");
 const RootsRoutes = require("./routes/rootsRoutes");
+const OwnerRoutes = require("./routes/ownersRoutes");
 
 // Importing models
 const UserModel = require("./common/models/User");
@@ -65,6 +66,8 @@ sequelize
     app.use("/auth", AuthRoute);
     app.use("/user", UsersRoutes);
     app.use("/root", RootsRoutes);
+    app.use("/owner", OwnerRoutes);
+
 
     app.listen(port, () => {
       console.log(`Le serveur écoute sur le port ${port}`);

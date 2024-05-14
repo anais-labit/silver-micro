@@ -3,7 +3,7 @@ import { BrowserRouter as Router,  Routes,  Route } from "react-router-dom";
 import RestaurantsList from "./pages/restaurant/RestaurantsList";
 import Authentication from "./pages/Authentication";
 import UserDetails from "./pages/User";
-
+import OwnerPanel from "./pages/owner/OwnerPanel";
 import RestaurantDetails from "./pages/restaurant/RestaurantDetails";
 import CreateRestaurant from "./pages/root/CreateRestaurant";
 import CreateUser from "./pages/root/CreateUser";
@@ -33,10 +33,10 @@ function App() {
         {hasAccess(userRole, ["owner"]) && (
           <>
             <Route path="/owner/panel" element={<OwnerPanel />} />
-            <Route
+            {/* <Route
               path="/owner/panel/restaurants"
               element={<OwnerRestaurants />}
-            />
+            /> */}
           </>
         )}
 
