@@ -16,6 +16,7 @@ const RootsRoutes = require("./routes/rootsRoutes");
 // Importing models
 const UserModel = require("./common/models/User");
 const RestaurantModel = require("./common/models/Restaurant");
+const BookingModel = require("./common/models/Booking")
 
 app.use(
   cors({
@@ -48,6 +49,8 @@ try {
 // Initialising models
 UserModel.initialise(sequelize);
 RestaurantModel.initialise(sequelize);
+BookingModel.initialise(sequelize);
+
 
 //Syncing the model with the database
 sequelize

@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import AddButton from "../../components/AddButton";
+import LogoutButton from "../../components/LogoutButton";
 
 
 const PATH = import.meta.env.VITE_PATH;
@@ -75,6 +76,7 @@ export default function RootPanel() {
       <section>
         <div className="flex justify-center items-center m-10">
           <h2 className="text-3xl">Les Rest'O</h2>
+          <LogoutButton />
         </div>
         <div className="flex justify-between items-center m-5">
           <button onClick={handleToggleView}>
