@@ -10,6 +10,7 @@ const PATH = import.meta.env.VITE_PATH;
 export default function AuthForm() {
   const [showSignUp, setShowSignUp] = useState(false);
   const [showSignIn, setShowSignIn] = useState(true);
+  // const [token, setToken] = useState(null);
   const [signInForm, setSignInForm] = useState({
     email: "",
     password: "",
@@ -83,6 +84,25 @@ export default function AuthForm() {
         const errorData = await response.json();
         throw new Error(errorData.error.message);
       }
+
+      const data = await response.json();
+      const { token, user } = data.data;
+
+      const userInfo = {
+        firstName: user.firstName,
+        lastName: user.lastName,
+        email: user.email,
+        role: user.role,
+        id: user.id,
+        jwtToken: token,
+      };
+
+      Object.entries(userInfo).forEach(([key, value]) => {
+        localStorage.setItem(key, value);
+      });
+
+      // setToken(token);
+
       console.log("Connexion réussie");
     } catch (error) {
       console.error("Erreur", error.message);
