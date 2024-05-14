@@ -10,9 +10,10 @@ export default function RestaurantsList() {
 
   return (
     <section>
-     
+
          <div className='flex justify-end items-end p-5'>
         <UserCard />
+        
          </div>
       <div className='flex justify-center items-center m-10'>
       

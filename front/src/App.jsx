@@ -6,6 +6,7 @@ import Authentication from './pages/Authentication';
 import RestaurantDetails from './pages/restaurant/RestaurantDetails';
 import CreateRestaurant from './pages/root/CreateRestaurant';
 import RootPanel from './pages/root/RootPanel';
+import RestaurantBookList from './pages/restaurant/RestaurantBookList';
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
       <Route path="/" element={<Authentication />} />
       <Route path="/restaurants" element={< RestaurantsList />} />
       <Route path="/restaurants/:title" element={<RestaurantDetails />} />
+      <Route path="/restaurants/:title/books" element={<RestaurantBookList />} />
       <Route path="/root/panel" element={< RootPanel />} />
       {/* <Route path="/root/panel/restaurants" element={< RootPanel />} />
       <Route path="/root/panel/users" element={< RootPanel/>} />
