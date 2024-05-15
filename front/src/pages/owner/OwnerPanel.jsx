@@ -61,7 +61,7 @@ export default function OwnerPanel() {
     setShowRestaurants(!showRestaurants);
   };
 
-  return (
+ return (
     <>
       <section>
         <div className="flex justify-center items-center m-10">

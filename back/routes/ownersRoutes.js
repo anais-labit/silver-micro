@@ -15,7 +15,7 @@ router.get(
 router.get(
   "/panel/bookings",
   [IsAuthenticatedMiddleware.check],
-  BookingController.getOwnerBookings
+  BookingController.getUserBookings
 );
 
 

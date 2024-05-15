@@ -1,7 +1,7 @@
-const BookingModel = require("../../common/models/Booking")
+const BookingModel = require("../../common/models/Booking");
 
 module.exports = {
-  getOwnerBookings: (req, res) => {
+  getUserBookings: (req, res) => {
     const {
       user: { userId },
     } = req;
