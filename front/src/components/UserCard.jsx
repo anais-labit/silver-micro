@@ -23,7 +23,6 @@ export default function UserCard() {
         })
         .then((data) => {
           const userDetail = data.data;
-          console.log(userDetail.firstName);
           setUserInfo(userDetail.firstName);
         })
         .catch((error) => {
@@ -33,7 +32,7 @@ export default function UserCard() {
   }, []);
 
   return (
-    <div className="flex flex-col h-24 w-42">
+    <div className="flex flex-col bg-green-100">
       <h3  className="font-bold text-3xl "  > {userInfo}</h3>
     </div>
   );

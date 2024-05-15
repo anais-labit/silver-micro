@@ -1,4 +1,5 @@
 import React from 'react';
+import back from '../assets/back.png';
 
 class RetourArriere extends React.Component {
   handleClick = (event) => {
@@ -11,7 +12,9 @@ class RetourArriere extends React.Component {
 
   render() {
     return (
-      <a href="#" onClick={this.handleClick}>Retour</a>
+      <div className='bg-blue-100'>
+        <a href="#" onClick={this.handleClick}><img src={back} alt="" srcset="" /></a>
+      </div>
     );
   }
 }
