@@ -41,12 +41,10 @@ module.exports = {
   // =======================================================================
   updateRestaurant: (req, res) => {
     const {
-      restaurant: { restaurantId },
+      params: { restaurantId },
       body: payload,
     } = req;
 
-    // IF the payload does not have any keys,
-    // THEN we can return an error, as nothing can be updated
     if (!Object.keys(payload).length) {
       return res.status(400).json({
         status: false,
@@ -73,6 +71,7 @@ module.exports = {
         });
       });
   },
+
   // =======================================================================
   deleteRestaurant: (req, res) => {
     const {
@@ -111,5 +110,4 @@ module.exports = {
         });
       });
   },
-
 };

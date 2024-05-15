@@ -13,11 +13,22 @@ router.get(
 );
 
 router.get(
+  "/panel/restaurants/:restaurantId",
+  [IsAuthenticatedMiddleware.check],
+  RestaurantController.getRestaurant
+);
+
+
+router.get(
   "/panel/bookings",
   [IsAuthenticatedMiddleware.check],
   BookingController.getUserBookings
 );
 
-
+router.patch(
+  "/panel/update-restaurant/:restaurantId",
+  [IsAuthenticatedMiddleware.check],
+  RestaurantController.updateRestaurant
+);
 
 module.exports = router;

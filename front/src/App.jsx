@@ -8,6 +8,7 @@ import RestaurantDetails from "./pages/restaurant/RestaurantDetails";
 import CreateRestaurant from "./pages/root/CreateRestaurant";
 import CreateUser from "./pages/root/CreateUser";
 import RootPanel from "./pages/root/RootPanel";
+import UpdateRestaurant from "./pages/owner/UpdateRestaurant";
 // import OwnerPanel from "./pages/owner/OwnerPanel";
 // import OwnerRestaurants from "./pages/owner/OwnerRestaurants";
 
@@ -33,10 +34,8 @@ function App() {
         {hasAccess(userRole, ["owner"]) && (
           <>
             <Route path="/owner/panel" element={<OwnerPanel />} />
-            {/* <Route
-              path="/owner/panel/restaurants"
-              element={<OwnerRestaurants />}
-            /> */}
+            <Route path="/owner/panel/update-restaurant/:restaurantId" element={<UpdateRestaurant />}
+            />
           </>
         )}
 

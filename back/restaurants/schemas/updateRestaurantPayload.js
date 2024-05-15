@@ -16,9 +16,9 @@ module.exports = {
     menu: {
       type: "json",
     },
-    rate: {
-      type: "float",
-    },
+    // rate: {
+    //   type: "float",
+    // },
     id_owner: {
       type: "integer",
     },

@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import LogoutButton from "../../components/LogoutButton";
+import RestaurantDetails from "../restaurant/RestaurantDetails";
 
 const PATH = import.meta.env.VITE_PATH;
 
@@ -61,7 +62,11 @@ export default function OwnerPanel() {
     setShowRestaurants(!showRestaurants);
   };
 
- return (
+  const handleEdit = (restaurantId) => {
+    window.location.href = `/owner/panel/update-restaurant/${restaurantId}`;
+  };
+
+  return (
     <>
       <section>
         <div className="flex justify-center items-center m-10">
