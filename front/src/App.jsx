@@ -34,7 +34,14 @@ function App() {
         {hasAccess(userRole, ["owner"]) && (
           <>
             <Route path="/owner/panel" element={<OwnerPanel />} />
-            <Route path="/owner/panel/update-restaurant/:restaurantId" element={<UpdateRestaurant />}
+            {/* <Route
+              path="/owner/panel/restaurants/:restaurantId"
+              element={<OwnerPanel />}
+            /> */}
+
+            <Route
+              path="/owner/panel/restaurants/update/:restaurantId"
+              element={<UpdateRestaurant />}
             />
           </>
         )}

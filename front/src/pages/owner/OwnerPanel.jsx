@@ -63,7 +63,7 @@ export default function OwnerPanel() {
   };
 
   const handleEdit = (restaurantId) => {
-    window.location.href = `/owner/panel/update-restaurant/${restaurantId}`;
+    window.location.href = `/owner/panel/restaurants/update/${restaurantId}`;
   };
 
   return (

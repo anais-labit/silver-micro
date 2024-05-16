@@ -26,7 +26,7 @@ router.get(
 );
 
 router.patch(
-  "/panel/update-restaurant/:restaurantId",
+  "/panel/restaurants/update/:restaurantId",
   [IsAuthenticatedMiddleware.check],
   RestaurantController.updateRestaurant
 );

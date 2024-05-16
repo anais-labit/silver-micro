@@ -20,15 +20,12 @@ module.exports = {
   },
   // =======================================================================
   getRestaurant: (req, res) => {
-    const {
-      restaurant: { restaurantId },
-    } = req;
-
+    const { restaurantId } = req.params;
     RestaurantModel.findRestaurant({ id: restaurantId })
       .then((restaurant) => {
         return res.status(200).json({
           status: true,
-          data: restaurant.toJSON(),
+          data: restaurant,
         });
       })
       .catch((err) => {

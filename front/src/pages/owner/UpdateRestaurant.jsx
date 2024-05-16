@@ -8,9 +8,11 @@ const PATH = import.meta.env.VITE_PATH;
 
 export default function UpdateRestaurant() {
   const { restaurantId } = useParams();
-  const parsedRestaurantId = parseInt(restaurantId);
 
-  const [UpdateRestaurantForm, setUpdateRestaurantForm] = useState({
+  const parsedRestaurantId = parseInt(restaurantId);
+  const [restaurantData, setRestaurantData] = useState();
+
+  const [updateRestaurantForm, setUpdateRestaurantForm] = useState({
     name: "",
     id: parsedRestaurantId,
     pax_capacity: "",
@@ -32,13 +34,11 @@ export default function UpdateRestaurant() {
             },
           }
         );
-
         if (!response.ok) {
           throw new Error("Failed to fetch restaurant data");
         }
-
         const restaurant = await response.json();
-        setRestaurantData(restaurant); 
+        setRestaurantData(restaurant?.data);
       } catch (error) {
         console.error("Error fetching restaurant data:", error.message);
       }
@@ -46,6 +46,19 @@ export default function UpdateRestaurant() {
 
     fetchRestaurantData();
   }, [parsedRestaurantId]);
+
+  useEffect(() => {
+    if (restaurantData) {
+      setUpdateRestaurantForm({
+        ...updateRestaurantForm,
+        name: restaurantData.name,
+        pax_capacity: restaurantData.pax_capacity,
+        address: restaurantData.address,
+        description: restaurantData.description,
+        menu: restaurantData.menu,
+      });
+    }
+  }, [restaurantData]);
 
   const handleUpdateRestaurant = (e) => {
     const { name, value } = e.target;
@@ -61,14 +74,14 @@ export default function UpdateRestaurant() {
     try {
       const jwtToken = localStorage.getItem("jwtToken");
       const response = await fetch(
-        `${PATH}/owner/panel/update-restaurant/${parsedRestaurantId}`,
+        `${PATH}/owner/panel/restaurants/update/${parsedRestaurantId}`,
         {
           method: "PATCH",
           headers: {
             "Content-Type": "application/json",
             Authorization: `Bearer ${jwtToken}`,
           },
-          body: JSON.stringify(UpdateRestaurantForm),
+          body: JSON.stringify(updateRestaurantForm),
         }
       );
 
@@ -81,6 +94,7 @@ export default function UpdateRestaurant() {
       console.error("Erreur", error.message);
     }
   };
+
   return (
     <section className="flex flex-col items-center">
       <div>
@@ -95,46 +109,46 @@ export default function UpdateRestaurant() {
         <div className="flex flex-row items-center space-y-2 relative">
           <FormInput
             type="text"
-            placeholder="Name"
+            placeholder={restaurantData?.name || "Name"}
             name="name"
             onChange={handleUpdateRestaurant}
-            value={UpdateRestaurantForm.name || ""}
+            value={restaurantData?.name}
           />
         </div>
         <div className="flex flex-row items-center space-y-2 relative">
           <FormInput
             type="number"
-            placeholder="Pax capacity"
+            placeholder={restaurantData?.pax_capacity || "Pax capacity"}
             name="pax_capacity"
             onChange={handleUpdateRestaurant}
-            value={UpdateRestaurantForm.pax_capacity || ""}
+            value={restaurantData?.pax_capacity}
           />
         </div>
         <div className="flex flex-row items-center space-y-2 relative">
           <FormInput
             type="text"
-            placeholder="address"
+            placeholder={restaurantData?.address || "Address"}
             name="address"
             onChange={handleUpdateRestaurant}
-            value={UpdateRestaurantForm.address || ""}
+            value={restaurantData?.address}
           />
         </div>
         <div className="flex flex-row items-center space-y-2 relative">
           <FormInput
             type="text"
-            placeholder="description"
+            placeholder={restaurantData?.description || "description"}
             name="description"
             onChange={handleUpdateRestaurant}
-            value={UpdateRestaurantForm.description || ""}
+            value={restaurantData?.description}
           />
         </div>
         <div className="flex flex-row items-center space-y-2 relative">
           <FormInput
             type="text"
-            placeholder="menu"
+            placeholder={restaurantData?.menu || "menu"}
             name="menu"
             onChange={handleUpdateRestaurant}
-            value={UpdateRestaurantForm.menu || ""}
+            value={restaurantData?.menu}
           />
         </div>
         <div className="flex items-center space-y-4 w-full pt-4">
