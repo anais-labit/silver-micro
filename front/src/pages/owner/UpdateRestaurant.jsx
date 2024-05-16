@@ -99,8 +99,7 @@ export default function UpdateRestaurant() {
     <section className="flex flex-col items-center">
       <div>
         <RootBackButton />
-        <h2>Renseigner les informations de votre restaurant</h2>
-        <p>Nom du restaurant</p>
+        <h2>Renseigner les informations de votre restaurant : {restaurantData?.name}</h2>
       </div>
       <form
         className="flex flex-col justify-center items-center"
