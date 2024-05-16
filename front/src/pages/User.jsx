@@ -97,8 +97,7 @@ export default function User() {
               <thead>
                 <tr>
                   <th className="border px-4 py-2">Restaurant</th>
-                  <th className="border px-4 py-2">Start</th>
-                  <th className="border px-4 py-2">End</th>
+                  <th className="border px-4 py-2">Date</th>
                   <th className="border px-4 py-2">Pax</th>
                 </tr>
               </thead>
@@ -108,8 +107,7 @@ export default function User() {
                     <td className="border px-4 py-2">
                       {booking.id_restaurant}
                     </td>
-                    <td className="border px-4 py-2">{booking.start}</td>
-                    <td className="border px-4 py-2">{booking.end}</td>
+                    <td className="border px-4 py-2">{booking.date}</td>
                     <td className="border px-4 py-2">{booking.pax}</td>
                   </tr>
                 ))}

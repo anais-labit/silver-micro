@@ -10,9 +10,23 @@ const BookingController = require("../bookings/controllers/BookingController");
 const updateUserPayload = require("../users/schemas/updateUserPayload");
 const changeRolePayload = require("../users/schemas/changeRolePayload");
 const { roles } = require("../config");
+const RestaurantController = require("../restaurants/controllers/RestaurantController");
 
 router.get("/", [IsAuthenticatedMiddleware.check], UserController.getUser);
 router.get("/bookings", [IsAuthenticatedMiddleware.check], BookingController.getUserBookings);
+
+router.get(
+  "/restaurants/:title",
+  [IsAuthenticatedMiddleware.check],
+  RestaurantController.getRestaurantByName
+);
+
+
+router.post(
+  "/restaurants/:title/books",
+  [IsAuthenticatedMiddleware.check],
+  BookingController.createUserBooking
+);
 
 
 

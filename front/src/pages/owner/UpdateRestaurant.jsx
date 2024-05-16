@@ -8,7 +8,6 @@ const PATH = import.meta.env.VITE_PATH;
 
 export default function UpdateRestaurant() {
   const { restaurantId } = useParams();
-
   const parsedRestaurantId = parseInt(restaurantId);
   const [restaurantData, setRestaurantData] = useState();
 
