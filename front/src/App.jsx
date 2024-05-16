@@ -4,6 +4,7 @@ import RestaurantsList from "./pages/restaurant/RestaurantsList";
 import Authentication from "./pages/Authentication";
 import UserDetails from "./pages/User";
 import OwnerPanel from "./pages/owner/OwnerPanel";
+import RestaurantBookList from "./pages/restaurant/RestaurantBookList";
 import RestaurantDetails from "./pages/restaurant/RestaurantDetails";
 import CreateRestaurant from "./pages/root/CreateRestaurant";
 import CreateUser from "./pages/root/CreateUser";
@@ -26,7 +27,7 @@ function App() {
         <Route path="/" element={<Authentication />} />
         <Route path="/restaurants" element={<RestaurantsList />} />
         <Route path="/restaurants/:title" element={<RestaurantDetails />} />
-        {/* <Route path="/restaurants/:title/books" element={<RestaurantBookList />} /> */}
+        <Route path="/restaurants/:title/books" element={<RestaurantBookList />} />
         <Route path="/user" element={<UserDetails />} />
         <Route path="/user/bookings" element={<UserDetails />} />
 

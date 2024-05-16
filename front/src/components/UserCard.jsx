@@ -1,18 +1,39 @@
+import { useEffect, useState } from "react";
 
+const PATH = import.meta.env.VITE_PATH;
 
 export default function UserCard() {
+  const [userInfo, setUserInfo] = useState(null);
 
-    const userInfo = 
-        {
-            name: "John Doe",
-            role: "User",
-        }
-    return (
-        <div className="flex flex-col bg-blue-200 h-24 w-42">
-            
-            <h3> Welcome {userInfo.name}</h3>
-            <p>{userInfo.role}</p>
-            
-        </div>
-    );
+  useEffect(() => {
+    const jwtToken = localStorage.getItem("jwtToken");
+    if (jwtToken) {
+      fetch(PATH + "/user", {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${jwtToken}`,
+        },
+      })
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error("An error occurred");
+          }
+          return response.json();
+        })
+        .then((data) => {
+          const userDetail = data.data;
+          setUserInfo(userDetail.firstName);
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+    }
+  }, []);
+
+  return (
+    <div className="flex flex-col bg-green-100">
+      <h3  className="font-bold text-3xl "  > {userInfo}</h3>
+    </div>
+  );
 }
