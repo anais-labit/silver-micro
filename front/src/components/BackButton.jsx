@@ -12,8 +12,8 @@ class RetourArriere extends React.Component {
 
   render() {
     return (
-      <div className='bg-blue-100'>
-        <a href="#" onClick={this.handleClick}><img src={back} alt="" srcset="" /></a>
+      <div>
+        <a href="#" onClick={this.handleClick}><img src={back} alt="" /></a>
       </div>
     );
   }

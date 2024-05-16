@@ -28,8 +28,7 @@ export default function RestaurantsList() {
               img={passetemps}
               adresse="65 bd de Paris"
               codePostal="13003"
-              note="4.5"
-              prixMoyen="20€"
+              
             />
           </Link>
         </div>
@@ -41,8 +40,7 @@ export default function RestaurantsList() {
               img={bellavita}
               adresse="65 bd de Paris"
               codePostal="13003"
-              note="4.5"
-              prixMoyen="20€"
+              
             />
           </Link>
         </div>
@@ -54,8 +52,43 @@ export default function RestaurantsList() {
               img={traditions}
               adresse="65 bd de Paris"
               codePostal="13003"
-              note="4.5"
-              prixMoyen="20€"
+              
+            />
+          </Link>
+        </div>
+
+        <div key="passe-temps" >
+          <Link to="/restaurants/le%20passe-temps">
+            <Card
+              title="le passe-temps"
+              img={passetemps}
+              adresse="65 bd de Paris"
+              codePostal="13003"
+              
+            />
+          </Link>
+        </div>
+
+        <div key="passe-temps" >
+          <Link to="/restaurants/le%20passe-temps">
+            <Card
+              title="le passe-temps"
+              img={passetemps}
+              adresse="65 bd de Paris"
+              codePostal="13003"
+              
+            />
+          </Link>
+        </div>
+
+        <div key="passe-temps" >
+          <Link to="/restaurants/le%20passe-temps">
+            <Card
+              title="le passe-temps"
+              img={passetemps}
+              adresse="65 bd de Paris"
+              codePostal="13003"
+              
             />
           </Link>
         </div>

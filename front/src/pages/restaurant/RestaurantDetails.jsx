@@ -1,4 +1,4 @@
-
+import React, { useState } from "react";
 import { useParams } from "react-router-dom";
 import BackButton from "../../components/BackButton";
 import { Link } from "react-router-dom";
@@ -6,13 +6,18 @@ import Booking from "../../components/Booking";
 import traditions2 from "../../assets/restoimg/traditions2.jpg";
 import bellavita2 from "../../assets/restoimg/bellavita2.jpg";
 import passetemps2 from "../../assets/restoimg/passe-temps2.jpg";
+import heart from "../../assets/heart.png";
+import heartLiked from "../../assets/liked.png";
 import pin from "../../assets/marqueur.png";
 import UserCard from "../../components/UserCard";
+
+
 const images = {
     traditions: traditions2,
     bellavita: bellavita2,
     "le passe-temps": passetemps2,
 };
+
 
 const RestoDetails = {
     traditions: {
@@ -23,7 +28,7 @@ const RestoDetails = {
             "entrées": [
                 { nom: "Assiette de Charcuterie Artisanale", prix: 18 },
                 { nom: "Soupe à l'Oignon Gratineé", prix: 14 },
-                
+
             ],
             "plats": [
                 { nom: "Coq au Vin", prix: 28 },
@@ -86,6 +91,13 @@ export default function RestaurantDetails() {
     let { title } = useParams();
     const resto = RestoDetails[title];
 
+    const [liked, setLiked] = useState(false);
+
+    const handleLike = () => {
+        setLiked(!liked);
+        console.log("liked", liked);
+    }
+
     return (
         <section>
             <div className="flex w-full justify-between p-5">
@@ -99,16 +111,27 @@ export default function RestaurantDetails() {
             <div className="w-full">
                 <img src={images[title]} alt="" className="h-96 w-full object-cover object-center" />
             </div>
-            
-            
+
             <div className="flex justify-between my-10 lg:mx-36">
                 <div className="flex flex-col max-sm:w-full lg:w-1/2 gap-8 max-sm:m-5">
                     <div className="flex flex-col gap-4">
-                        <div className="flex justify-between w-full px-2">
-                            <h2 className="text-3xl uppercase font-bold">{resto.title}</h2>
-                            <button className='max-sm:flex lg:hidden bg-black px-3 pb-1 text-white rounded-xl text-xl'>Reserver</button>
+                        <div className="flex justify-between w-full px-2 items-center">
+                            <div>
+                                <h2 className="text-3xl uppercase font-bold">{resto.title}</h2>
+                            </div>
+                            <div className="relative">
+
+                                <button onClick={handleLike} className="max-sm:hidden lg:flex">
+                                    <img src={liked ? heartLiked : heart} className="h-8 w-8 hover:scale-150 duration-500" />
+                                </button>
+
+                                <Link to={`/restaurants/${title}/books`}>
+                                    <button className='max-sm:flex lg:hidden bg-black px-3 pb-1 text-white rounded-xl text-xl'>Reserver</button>
+                                </Link>
+                            </div>
+
                         </div>
-                        
+
                         <div className="flex items-center my-2 gap-2">
                             <img src={pin} className="h-5 w-5" />
                             <p>{resto.adress}</p>
@@ -134,8 +157,8 @@ export default function RestaurantDetails() {
                             <ul className="ml-5">
                                 {resto.menu.plats.map((plat, index) => (
                                     <li key={index}>
-                                    {plat.nom} - {plat.prix} €
-                                </li>
+                                        {plat.nom} - {plat.prix} €
+                                    </li>
                                 ))}
                             </ul>
                         </div>
@@ -144,8 +167,8 @@ export default function RestaurantDetails() {
                             <ul className="ml-5">
                                 {resto.menu.desserts.map((plat, index) => (
                                     <li key={index}>
-                                    {plat.nom} - {plat.prix} €
-                                </li>
+                                        {plat.nom} - {plat.prix} €
+                                    </li>
                                 ))}
                             </ul>
                         </div>

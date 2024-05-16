@@ -1,8 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
+import { useParams } from 'react-router-dom';
 
 export default function Booking() {
+    const { title } = useParams();
+
     const jours = [
         "lun",
         "mar",
@@ -90,13 +93,15 @@ export default function Booking() {
             setBookings({...bookings, 
                 date: jours[selectedDate.getDay() - 1] + " " + selectedDate.getDate() + " " + selectedDate.toLocaleString('default', { month: 'long' }),
                 hour: selectedHour,
-                people: selectedPeople
+                people: selectedPeople,
+                id : {title}
             });
             // Réinitialiser les sélections pour permettre une nouvelle réservation
             setSelectedDate(new Date());
             setSelectedHour(null);
             setSelectedPeople(null);
             setIsConfirmed(true); // Confirmer la réservation
+            console.log(bookings)
         } else {
             // Afficher un message d'erreur ou demander à l'utilisateur de sélectionner toutes les informations nécessaires
             console.log("Veuillez sélectionner une date, une heure et un nombre de personnes.");
@@ -107,7 +112,7 @@ export default function Booking() {
     
 
     return (
-        <section className='max-sm:w-full lg:w-[420px] lg:border-2 lg:rounded-lg h-[490px] bg-white relative'>
+        <section className='max-sm:w-full lg:w-[420px] lg:rounded-lg h-[490px] bg-white relative shadow-lg'>
             {!isConfirmed && (
                 <div className='grid grid-cols-3 justify-center items-center gap-4 m-8'>
                     <button onClick={() => handleButtonClick("JOURS")}>
