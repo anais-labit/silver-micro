@@ -20,15 +20,12 @@ module.exports = {
   },
   // =======================================================================
   getRestaurant: (req, res) => {
-    const {
-      restaurant: { restaurantId },
-    } = req;
-
+    const { restaurantId } = req.params;
     RestaurantModel.findRestaurant({ id: restaurantId })
       .then((restaurant) => {
         return res.status(200).json({
           status: true,
-          data: restaurant.toJSON(),
+          data: restaurant,
         });
       })
       .catch((err) => {
@@ -41,12 +38,10 @@ module.exports = {
   // =======================================================================
   updateRestaurant: (req, res) => {
     const {
-      restaurant: { restaurantId },
+      params: { restaurantId },
       body: payload,
     } = req;
 
-    // IF the payload does not have any keys,
-    // THEN we can return an error, as nothing can be updated
     if (!Object.keys(payload).length) {
       return res.status(400).json({
         status: false,
@@ -73,6 +68,7 @@ module.exports = {
         });
       });
   },
+
   // =======================================================================
   deleteRestaurant: (req, res) => {
     const {

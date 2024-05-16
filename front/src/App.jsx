@@ -3,11 +3,15 @@ import { BrowserRouter as Router,  Routes,  Route } from "react-router-dom";
 import RestaurantsList from "./pages/restaurant/RestaurantsList";
 import Authentication from "./pages/Authentication";
 import UserDetails from "./pages/User";
+import OwnerPanel from "./pages/owner/OwnerPanel";
 import RestaurantBookList from "./pages/restaurant/RestaurantBookList";
 import RestaurantDetails from "./pages/restaurant/RestaurantDetails";
 import CreateRestaurant from "./pages/root/CreateRestaurant";
 import CreateUser from "./pages/root/CreateUser";
 import RootPanel from "./pages/root/RootPanel";
+import UpdateRestaurant from "./pages/owner/UpdateRestaurant";
+// import OwnerPanel from "./pages/owner/OwnerPanel";
+// import OwnerRestaurants from "./pages/owner/OwnerRestaurants";
 
 function App() {
   const userRole = localStorage.getItem("role");
@@ -31,9 +35,14 @@ function App() {
         {hasAccess(userRole, ["owner"]) && (
           <>
             <Route path="/owner/panel" element={<OwnerPanel />} />
+            {/* <Route
+              path="/owner/panel/restaurants/:restaurantId"
+              element={<OwnerPanel />}
+            /> */}
+
             <Route
-              path="/owner/panel/restaurants"
-              element={<OwnerRestaurants />}
+              path="/owner/panel/restaurants/update/:restaurantId"
+              element={<UpdateRestaurant />}
             />
           </>
         )}

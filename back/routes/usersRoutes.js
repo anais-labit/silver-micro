@@ -5,13 +5,14 @@ const SchemaValidationMiddleware = require("../common/middlewares/SchemaValidati
 const CheckPermissionMiddleware = require("../common/middlewares/CheckPermissionMiddleware");
 
 const UserController = require("../users/controllers/UserController");
+const BookingController = require("../bookings/controllers/BookingController");
 
 const updateUserPayload = require("../users/schemas/updateUserPayload");
 const changeRolePayload = require("../users/schemas/changeRolePayload");
 const { roles } = require("../config");
 
 router.get("/", [IsAuthenticatedMiddleware.check], UserController.getUser);
-router.get("/bookings", [IsAuthenticatedMiddleware.check], UserController.getUserBookings);
+router.get("/bookings", [IsAuthenticatedMiddleware.check], BookingController.getUserBookings);
 
 
 

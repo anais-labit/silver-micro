@@ -1,5 +1,5 @@
 const UserModel = require("../../common/models/User");
-const BookingModel = require("../../common/models/Booking");
+// const BookingModel = require("../../common/models/Booking");
 
 module.exports = {
   createUser: (req, res) => {
