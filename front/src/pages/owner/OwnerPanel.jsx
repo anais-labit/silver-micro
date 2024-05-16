@@ -26,7 +26,6 @@ export default function OwnerPanel() {
           return response.json();
         })
         .then((data) => {
-          console.log("Fetch result:", data.data);
           const restaurantsData = data.data;
           setRestaurants(restaurantsData);
         })
@@ -50,7 +49,6 @@ export default function OwnerPanel() {
           return response.json();
         })
         .then((data) => {
-          console.log("Fetch result:", data.data);
           const usersData = data.data;
           setBookings(usersData);
         })

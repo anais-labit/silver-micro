@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import FormInput from "../../components/FormInput";
 import ValidateButton from "../../components/ValidateButton";
-import RootBackButton from "../../components/RootBackButton";
+import OwnerBackButton from "../../components/OwnerBackButton";
 
 const PATH = import.meta.env.VITE_PATH;
 
@@ -98,8 +98,11 @@ export default function UpdateRestaurant() {
   return (
     <section className="flex flex-col items-center">
       <div>
-        <RootBackButton />
-        <h2>Renseigner les informations de votre restaurant : {restaurantData?.name}</h2>
+        <OwnerBackButton />
+        <h2>
+          Renseigner les informations de votre restaurant :{" "}
+          {restaurantData?.name}
+        </h2>
       </div>
       <form
         className="flex flex-col justify-center items-center"
