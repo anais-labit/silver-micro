@@ -22,7 +22,7 @@ export default function RestaurantsList() {
       <div className="flex justify-center items-center m-10 max-sm:flex-col">
 
         <div key="passe-temps" >
-          <Link to="/restaurants/le%20passe-temps">
+          <Link to="/restaurants/passe-temps">
             <Card
               title="le passe-temps"
               img={passetemps}
@@ -58,7 +58,7 @@ export default function RestaurantsList() {
         </div>
 
         <div key="passe-temps" >
-          <Link to="/restaurants/le%20passe-temps">
+          <Link to="/restaurants/resto4">
             <Card
               title="le passe-temps"
               img={passetemps}
@@ -70,7 +70,7 @@ export default function RestaurantsList() {
         </div>
 
         <div key="passe-temps" >
-          <Link to="/restaurants/le%20passe-temps">
+          <Link to="/restaurants/resto5">
             <Card
               title="le passe-temps"
               img={passetemps}
@@ -82,7 +82,7 @@ export default function RestaurantsList() {
         </div>
 
         <div key="passe-temps" >
-          <Link to="/restaurants/le%20passe-temps">
+          <Link to="/restaurants/resto6">
             <Card
               title="le passe-temps"
               img={passetemps}
