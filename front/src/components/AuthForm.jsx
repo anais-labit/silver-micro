@@ -4,12 +4,14 @@ import ValidateButton from "./ValidateButton";
 import userImg from "../assets/user.png";
 import lockImg from "../assets/lock.png";
 import mailImg from "../assets/mail.png";
+import { useNavigate } from "react-router-dom";
 
 const PATH = import.meta.env.VITE_PATH;
 
 export default function AuthForm() {
   const [showSignUp, setShowSignUp] = useState(false);
   const [showSignIn, setShowSignIn] = useState(true);
+  const navigate = useNavigate();
   // const [token, setToken] = useState(null);
   const [signInForm, setSignInForm] = useState({
     email: "",
@@ -53,6 +55,9 @@ export default function AuthForm() {
         throw new Error(errorData.error.message);
       }
       console.log("Inscription réussie");
+      setShowSignUp(false);
+      setShowSignIn(true);
+
     } catch (error) {
       console.error("Erreur", error.message);
     }
@@ -69,6 +74,7 @@ export default function AuthForm() {
   const handleSignInSubmit = async (e) => {
     e.preventDefault();
 
+    
     const signInData = { signInForm };
     console.log(signInData);
 
@@ -104,9 +110,15 @@ export default function AuthForm() {
       // setToken(token);
 
       console.log("Connexion réussie");
+
+      navigate("/restaurants");
+
+
+
     } catch (error) {
       console.error("Erreur", error.message);
     }
+
   };
 
   return (
