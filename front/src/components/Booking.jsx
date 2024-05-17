@@ -47,8 +47,6 @@ export default function Booking() {
         if (data && data.status) {
           const restaurantId = data.data.id;
 
-          console.log(data.data);
-          
           setRestaurantId(restaurantId);
 
           const bookingsResponse = await fetch(
@@ -68,7 +66,6 @@ export default function Booking() {
           if (!bookingsResponse.ok) {
             throw new Error("Error fetching restaurant bookings");
           }
-
         } else {
           console.error("Failed to fetch restaurant data");
         }
@@ -163,6 +160,10 @@ export default function Booking() {
 
   return (
     <section className="max-sm:w-full lg:w-[420px] lg:rounded-lg h-[490px] bg-white relative shadow-lg">
+      {bookings.map((booking) => {
+        console.log(booking.date, "toto");
+        return null; // Assurez-vous de retourner quelque chose pour éviter les erreurs
+      })}
       {!isConfirmed && (
         <div className="grid grid-cols-3 justify-center items-center gap-4 m-8">
           <button onClick={() => handleButtonClick("JOURS")}>
