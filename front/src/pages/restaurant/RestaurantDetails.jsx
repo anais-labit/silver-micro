@@ -9,7 +9,7 @@ import passetemps2 from "../../assets/restoimg/passe-temps2.jpg";
 import heart from "../../assets/heart.png";
 import heartLiked from "../../assets/liked.png";
 import pin from "../../assets/marqueur.png";
-import UserCard from "../../components/UserCard";
+import UserMenu from "../../components/UserMenu";
 import Pill from "../../components/Pill";
 
 const images = {
@@ -106,7 +106,7 @@ export default function RestaurantDetails() {
           <BackButton />
         </div>
         <div>
-          <UserCard />
+          <UserMenu />
         </div>
       </div>
       <div className="w-full">
