@@ -3,7 +3,7 @@ import passetemps from '../../assets/restoimg/passe-temps.jpg';
 import bellavita from '../../assets/restoimg/bellavita.jpg';
 import traditions from '../../assets/restoimg/traditions.jpg';
 import { Link } from 'react-router-dom';
-import UserCard from '../../components/UserCard';
+import UserMenu from '../../components/UserMenu';
 
 
 export default function RestaurantsList() {
@@ -12,7 +12,7 @@ export default function RestaurantsList() {
     <section>
 
       <div className='flex justify-end items-end p-5'>
-        <UserCard />
+        <UserMenu />
 
       </div>
       <div className='flex justify-center items-center m-10'>
@@ -57,41 +57,7 @@ export default function RestaurantsList() {
           </Link>
         </div>
 
-        <div key="passe-temps" >
-          <Link to="/restaurants/le%20passe-temps">
-            <Card
-              title="le passe-temps"
-              img={passetemps}
-              adresse="65 bd de Paris"
-              codePostal="13003"
-              
-            />
-          </Link>
-        </div>
-
-        <div key="passe-temps" >
-          <Link to="/restaurants/le%20passe-temps">
-            <Card
-              title="le passe-temps"
-              img={passetemps}
-              adresse="65 bd de Paris"
-              codePostal="13003"
-              
-            />
-          </Link>
-        </div>
-
-        <div key="passe-temps" >
-          <Link to="/restaurants/le%20passe-temps">
-            <Card
-              title="le passe-temps"
-              img={passetemps}
-              adresse="65 bd de Paris"
-              codePostal="13003"
-              
-            />
-          </Link>
-        </div>
+       
       </div>
     </section>
   )
