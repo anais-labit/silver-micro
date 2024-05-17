@@ -107,4 +107,29 @@ module.exports = {
         });
       });
   },
-};
+  // =======================================================================
+  getRestaurantByName: (req, res) => {
+  const { title } = req.params;
+  RestaurantModel.findRestaurant({ name: title })
+    .then((restaurant) => {
+      if (restaurant) {
+        return res.status(200).json({
+          status: true,
+          data: restaurant,
+        });
+      } else {
+        return res.status(404).json({
+          status: false,
+          error: "Restaurant not found",
+        });
+      }
+    })
+    .catch((err) => {
+      return res.status(500).json({
+        status: false,
+        error: err.message,
+      });
+    });
+  },
+}
+

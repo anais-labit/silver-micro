@@ -10,11 +10,38 @@ const BookingController = require("../bookings/controllers/BookingController");
 const updateUserPayload = require("../users/schemas/updateUserPayload");
 const changeRolePayload = require("../users/schemas/changeRolePayload");
 const { roles } = require("../config");
+const RestaurantController = require("../restaurants/controllers/RestaurantController");
 
 router.get("/", [IsAuthenticatedMiddleware.check], UserController.getUser);
-router.get("/bookings", [IsAuthenticatedMiddleware.check], BookingController.getUserBookings);
+router.get(
+  "/bookings",
+  [IsAuthenticatedMiddleware.check],
+  BookingController.getUserBookings
+);
 
+router.get(
+  "/restaurants/:title",
+  [IsAuthenticatedMiddleware.check],
+  RestaurantController.getRestaurantByName
+);
 
+router.get(
+  "/restaurants/:id/bookings",
+  [IsAuthenticatedMiddleware.check],
+  BookingController.getRestaurantBookings
+);
+
+router.get(
+  "/restaurants",
+  [IsAuthenticatedMiddleware.check],
+  RestaurantController.getAllRestaurants
+);
+
+router.post(
+  "/restaurants/:title/books",
+  [IsAuthenticatedMiddleware.check],
+  BookingController.createUserBooking
+);
 
 // router.patch('/update/:userId', [IsAuthenticatedMiddleware.check], UserController.updateUser)
 
@@ -26,6 +53,5 @@ router.get("/bookings", [IsAuthenticatedMiddleware.check], BookingController.get
 //     ],
 //     UserController.updateUser
 //   );
-
 
 module.exports = router;

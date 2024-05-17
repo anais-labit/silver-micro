@@ -1,196 +1,251 @@
-import React, { useState, useEffect } from 'react';
-import Calendar from 'react-calendar';
-import 'react-calendar/dist/Calendar.css';
-import { useParams } from 'react-router-dom';
+import React, { useState, useEffect } from "react";
+import Calendar from "react-calendar";
+import "react-calendar/dist/Calendar.css";
+import { useParams } from "react-router-dom";
+
+const PATH = import.meta.env.VITE_PATH;
 
 export default function Booking() {
-    const { title } = useParams();
+  const { title } = useParams();
+  const [restaurantId, setRestaurantId] = useState(null);
+  const [bookings, setBookings] = useState([]);
 
-    const jours = [
-        "lun",
-        "mar",
-        "mer",
-        "jeu",
-        "ven",
-        "sam",
-        "dim"
-    ];
+  const jours = ["lun", "mar", "mer", "jeu", "ven", "sam", "dim"];
+  const heures = [
+    "12:00",
+    "12:30",
+    "13:00",
+    "13:30",
+    "14:00",
+    "19:00",
+    "19:30",
+    "20:00",
+    "20:30",
+    "21:00",
+    "21:30",
+  ];
+  const pax = ["1", "2", "3", "4", "5", "6", "7", "8"];
 
-    const heures = [
-        "12:00",
-        "12:30",
-        "13:00",
-        "13:30",
-        "14:00",
-        "19:00",
-        "19:30",
-        "20:00",
-        "20:30",
-        "21:00",
-        "21:30",
-    ];
+  const [displayState, setDisplayState] = useState("JOURS");
+  const [selectedDate, setSelectedDate] = useState(new Date());
+  const [selectedHour, setSelectedHour] = useState(null);
+  const [selectedPax, setSelectedPax] = useState(null);
+  const [isConfirmed, setIsConfirmed] = useState(false);
 
-    const personnes = [
-        "1",
-        "2",
-        "3",
-        "4",
-        "5",
-        "6",
-        "7",
-        "8",
-    ];
+  useEffect(() => {
+    const fetchRestaurantInfoAndBookings = async () => {
+      try {
+        const jwtToken = localStorage.getItem("jwtToken");
+        const response = await fetch(`${PATH}/user/restaurants/${title}`, {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${jwtToken}`,
+          },
+        });
 
-    const [displayState, setDisplayState] = useState("JOURS");
-    const [selectedDate, setSelectedDate] = useState(new Date());
-    const [selectedHour, setSelectedHour] = useState(null);
-    const [selectedPeople, setSelectedPeople] = useState(null);
-    const [bookings, setBookings] = useState({
-        date: null,
-        hour: null,
-        people: null
-    }); // [date, heure, personnes]
-    const [isConfirmed, setIsConfirmed] = useState(false);
+        const data = await response.json();
+        if (data && data.status) {
+          const restaurantId = data.data.id;
 
-    useEffect(() => {
-        console.log("Réservations mises à jour :", bookings);
-        console.log(selectedDate)
-        console.log(selectedHour)
-    }, [bookings]);
+          setRestaurantId(restaurantId);
 
-    const handleDayClick = (date) => {
-        setSelectedDate(date);
-        setDisplayState("HEURES");
-        
-    };
+          const bookingsResponse = await fetch(
+            `${PATH}/user/restaurants/${restaurantId}/bookings`,
+            {
+              headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${jwtToken}`,
+              },
+            }
+          );
 
-    const handleHourClick = (heure) => {
-        setSelectedHour(heure);
-        setDisplayState("PERSONNES");
-    };
+          const bookingsData = await bookingsResponse.json();
+          console.log("Restaurant Bookings:", bookingsData.data);
+          setBookings(bookingsData.data);
 
-    const handleButtonClick = (state) => {
-        // Vérifier si on avance vers une étape ultérieure
-        if ((state === "HEURES" && displayState === "JOURS") || (state === "PERSONNES" && displayState === "HEURES")) {
-            // Réinitialiser les sélections
-            setSelectedHour(null);
-            setSelectedPeople(null);
-        }
-        
-        // Changer l'état d'affichage
-        setDisplayState(state);
-    
-        // Réinitialiser la sélection de la date si on revient à la sélection des jours
-        if (state === "JOURS") {
-            setSelectedDate(new Date());
-        }
-    };
-
-    const handleBookingConfirm = () => {
-        // Vérifier si toutes les informations nécessaires ont été sélectionnées
-        if (selectedDate && selectedHour && selectedPeople) {
-            // Créer un nouvel objet représentant la réservation
-            const isoDate = selectedDate.toISOString();
-            // Ajouter la nouvelle réservation à l'état des réservations
-            setBookings({...bookings, 
-                date: isoDate,
-                hour: selectedHour,
-                people: selectedPeople,
-                id : {title}
-            });
-            // Réinitialiser les sélections pour permettre une nouvelle réservation
-            setSelectedDate(new Date());
-            setSelectedHour(null);
-            setSelectedPeople(null);
-            setIsConfirmed(true); // Confirmer la réservation
-            console.log(bookings)
+          if (!bookingsResponse.ok) {
+            throw new Error("Error fetching restaurant bookings");
+          }
         } else {
-            // Afficher un message d'erreur ou demander à l'utilisateur de sélectionner toutes les informations nécessaires
-            console.log("Veuillez sélectionner une date, une heure et un nombre de personnes.");
+          console.error("Failed to fetch restaurant data");
         }
+      } catch (error) {
+        console.error("Error fetching restaurant data:", error);
+      }
     };
 
-    const formattedDate = jours[selectedDate.getDay() - 1] + " " + selectedDate.getDate() + " " + selectedDate.toLocaleString('default', { month: 'long' });
-    
+    fetchRestaurantInfoAndBookings();
+  }, [title]);
 
-    return (
-        <section className='max-sm:w-full lg:w-[420px] lg:rounded-lg h-[490px] bg-white relative shadow-lg'>
-            {!isConfirmed && (
-                <div className='grid grid-cols-3 justify-center items-center gap-4 m-8'>
-                    <button onClick={() => handleButtonClick("JOURS")}>
-                        <div className="border-2 p-2 flex justify-center uppercase">
-                        {formattedDate}
-                    </div>
-                    </button>
-                    <button onClick={() => handleButtonClick("HEURES")}>
-                        <div className="border-2 p-2 flex justify-center">
-                        {selectedHour || "HEURES"}
-                    </div>
-                    </button>
-                    <button onClick={() => handleButtonClick("PERSONNES")}>
-                        <div className="border-2 p-2 flex justify-center">
-                        {selectedPeople || "PERS"}
-                    </div>
-                    </button>
-                </div>
-            )}
+  const handleDayClick = (date) => {
+    setSelectedDate(date);
+    setDisplayState("HEURES");
+  };
 
-            {!isConfirmed && displayState === "JOURS" && (
-                <div className="m-5 mt-12 flex justify-center">
-                    <Calendar
-                        onChange={date => handleDayClick(date)}
-                        value={selectedDate}
-                    />
-                </div>
-            )}
+  const handleHourClick = (heure) => {
+    setSelectedHour(heure);
+    setDisplayState("pax");
+  };
 
-            {!isConfirmed && displayState === "HEURES" && (
-                <div className="m-5 mt-16">
-                    <div className="grid grid-cols-3 gap-4">
-                        {heures.map((heure, heureIndex) => (
-                            <button
-                                className="border-black border-2"
-                                onClick={() => handleHourClick(heure)}
-                                key={heureIndex}
-                            >
-                                {heure}
-                            </button>
-                        ))}
-                    </div>
-                </div>
-            )}
+  const handleButtonClick = (state) => {
+    if (
+      (state === "HEURES" && displayState === "JOURS") ||
+      (state === "pax" && displayState === "HEURES")
+    ) {
+      setSelectedHour(null);
+      setSelectedPax(null);
+    }
+    setDisplayState(state);
+    if (state === "JOURS") {
+      setSelectedDate(new Date());
+    }
+  };
 
-            {!isConfirmed && displayState === "PERSONNES" && (
-                <div className="m-5 mt-16">
-                    <div className="m-5 grid grid-cols-4 gap-4">
-                        {personnes.map((personne, personneIndex) => (
-                            <button
-                                className="border-black border-2"
-                                onClick={() => setSelectedPeople(personne)}
-                                key={personneIndex}
-                            >
-                                {personne}
-                            </button>
-                        ))}
-                    </div>
-                </div>
-            )}
+  const handleBookingConfirm = async (e) => {
+    e.preventDefault();
 
-            {isConfirmed && (
-                <div className="p-5 h-full">
-                    <div className='flex font-bold text-xl flex-col h-full justify-center'>
-                        <p className="text-center ">Réservation confirmée pour pour {bookings?.people} personne(s) le {bookings?.date} à {bookings?.hour} .</p>
-                    </div>
-                </div>
-            )}
+    if (selectedDate && selectedHour && selectedPax) {
+      const adjustedDate = new Date(
+        selectedDate.getTime() - selectedDate.getTimezoneOffset() * 60000
+      );
+      const formatedDBDate =
+        adjustedDate.toISOString().slice(0, 10) + " " + selectedHour;
 
-            {!isConfirmed && selectedDate && selectedHour && selectedPeople && (
-                
+      const bookingPayload = {
+        id_user: localStorage.getItem("id"),
+        id_restaurant: restaurantId,
+        hour: selectedHour,
+        date: formatedDBDate,
+        pax: selectedPax,
+      };
 
-                <div className=" absolute p-5 inset-x-0 bottom-0">
-                    <button onClick={handleBookingConfirm} className='bg-black px-3 pb-1 text-white rounded-xl text-xl w-full'>Confirmer la réservation</button>
-                </div>
-            )}
-        </section>
-    );
+      try {
+        const jwtToken = localStorage.getItem("jwtToken");
+        const response = await fetch(
+          `${PATH}/user/restaurants/${restaurantId}/books`,
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${jwtToken}`,
+            },
+            body: JSON.stringify(bookingPayload),
+          }
+        );
+
+        const result = await response.json();
+        if (result.status === false) {
+          throw new Error(result.error.message);
+        }
+        console.log("Booking réussi");
+        setIsConfirmed(true);
+        setSelectedDate(new Date());
+        setSelectedHour(null);
+        setSelectedPax(null);
+      } catch (error) {
+        console.error("Error confirming booking:", error);
+      }
+    } else {
+      console.log(
+        "Veuillez sélectionner une date, une heure et un nombre de pax."
+      );
+    }
+  };
+
+  const formatedDate = `${
+    jours[selectedDate.getDay() - 1]
+  } ${selectedDate.getDate()} ${selectedDate.toLocaleString("default", {
+    month: "long",
+  })}`;
+
+  return (
+    <section className="max-sm:w-full lg:w-[420px] lg:rounded-lg h-[490px] bg-white relative shadow-lg">
+      {bookings.map((booking) => {
+        console.log(booking.date, "toto");
+        return null; // Assurez-vous de retourner quelque chose pour éviter les erreurs
+      })}
+      {!isConfirmed && (
+        <div className="grid grid-cols-3 justify-center items-center gap-4 m-8">
+          <button onClick={() => handleButtonClick("JOURS")}>
+            <div className="border-2 p-2 flex justify-center uppercase">
+              {formatedDate}
+            </div>
+          </button>
+          <button onClick={() => handleButtonClick("HEURES")}>
+            <div className="border-2 p-2 flex justify-center">
+              {selectedHour || "HEURES"}
+            </div>
+          </button>
+          <button onClick={() => handleButtonClick("pax")}>
+            <div className="border-2 p-2 flex justify-center">
+              {selectedPax || "PERS"}
+            </div>
+          </button>
+        </div>
+      )}
+
+      {!isConfirmed && displayState === "JOURS" && (
+        <div className="m-5 mt-12 flex justify-center">
+          <Calendar
+            onChange={(date) => handleDayClick(date)}
+            value={selectedDate}
+          />
+        </div>
+      )}
+
+      {!isConfirmed && displayState === "HEURES" && (
+        <div className="m-5 mt-16">
+          <div className="grid grid-cols-3 gap-4">
+            {heures.map((heure, heureIndex) => (
+              <button
+                className="border-black border-2"
+                onClick={() => handleHourClick(heure)}
+                key={heureIndex}
+              >
+                {heure}
+              </button>
+            ))}
+          </div>
+        </div>
+      )}
+
+      {!isConfirmed && displayState === "pax" && (
+        <div className="m-5 mt-16">
+          <div className="m-5 grid grid-cols-4 gap-4">
+            {pax.map((personne, personneIndex) => (
+              <button
+                className="border-black border-2"
+                onClick={() => setSelectedPax(personne)}
+                key={personneIndex}
+              >
+                {personne}
+              </button>
+            ))}
+          </div>
+        </div>
+      )}
+
+      {isConfirmed && (
+        <div className="p-5 h-full">
+          <div className="flex font-bold text-xl flex-col h-full justify-center">
+            <p className="text-center ">
+              Réservation confirmée pour {selectedPax} personne(s) le{" "}
+              {formatedDate} à {selectedHour}.
+            </p>
+          </div>
+        </div>
+      )}
+
+      {!isConfirmed && selectedDate && selectedHour && selectedPax && (
+        <div className="absolute p-5 inset-x-0 bottom-0">
+          <button
+            onClick={handleBookingConfirm}
+            className="bg-black px-3 pb-1 text-white rounded-xl text-xl w-full"
+          >
+            Confirmer la réservation
+          </button>
+        </div>
+      )}
+    </section>
+  );
 }

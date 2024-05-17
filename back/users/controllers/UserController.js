@@ -41,12 +41,11 @@ module.exports = {
   },
 
   getUserBookings: (req, res) => {
-
     const {
       user: { userId },
     } = req;
 
-    BookingModel.findUserBookings({ id_user: userId })
+    BookingModel.findAllBookings({ id_user: userId })
       .then((bookings) => {
         return res.status(200).json({
           status: true,
@@ -158,4 +157,3 @@ module.exports = {
   //     });
   // },
 };
-

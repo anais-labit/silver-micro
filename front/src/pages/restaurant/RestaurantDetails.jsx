@@ -1,7 +1,6 @@
-import React, { useState } from "react";
-import { useParams } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { useParams, Link } from "react-router-dom";
 import BackButton from "../../components/BackButton";
-import { Link } from "react-router-dom";
 import Booking from "../../components/Booking";
 import traditions2 from "../../assets/restoimg/traditions2.jpg";
 import bellavita2 from "../../assets/restoimg/bellavita2.jpg";
@@ -15,84 +14,56 @@ import Pill from "../../components/Pill";
 const images = {
   traditions: traditions2,
   bellavita: bellavita2,
-  "le passe-temps": passetemps2,
+  "passe-temps": passetemps2,
 };
 
 const RestoDetails = {
-  traditions: {
-    title: "Traditions",
-    description:
-      "Tradition vous invite à découvrir l'essence même de la cuisine française dans un cadre rustique et convivial. Avec un engagement envers les produits locaux et de saison, notre restaurant offre une expérience gastronomique authentique, mettant en valeur les saveurs riches et variées du terroir français.",
-    adress: "65 bd de Paris 13003 Marseille",
-    menu: {
-      entrées: [
-        { nom: "Assiette de Charcuterie Artisanale", prix: 18 },
-        { nom: "Soupe à l'Oignon Gratineé", prix: 14 },
-      ],
-      plats: [
-        { nom: "Coq au Vin", prix: 28 },
-        { nom: "Cassoulet Maison", prix: 28 },
-      ],
-      desserts: [
-        { nom: "Plateau de Fromages Affinés", prix: 14 },
-        { nom: "Tarte Tatin Maison", prix: 12 },
-        { nom: "Crème Brûlée à la Lavande", prix: 12 },
-      ],
-    },
-  },
-  bellavita: {
-    title: "Bellavita",
-    description:
-      "Plongez dans l'atmosphère authentique de l'Italie à La Trattoria Bella Vita. Niché dans une charmante rue pavée, ce restaurant respire la convivialité et la chaleur méditerranéenne dès que vous franchissez ses portes. Les murs sont ornés de photos de paysages pittoresques d'Italie, tandis que des airs de musique italienne emplissent l'air, vous transportant immédiatement dans une ambiance décontractée et joyeuse.",
-    adress: "65 bd de Paris 13003 Marseille",
-    menu: {
-      entrées: [
-        { nom: "salade de chèvre chaud", prix: 8 },
-        { nom: "salade niçoise", prix: 10 },
-        { nom: "salade césar", prix: 12 },
-        { nom: "salade de tomates", prix: 8 },
-      ],
-      plats: [
-        { nom: "Coq au Vin", prix: 28 },
-        { nom: "Cassoulet Maison", prix: 28 },
-      ],
-      desserts: [
-        { nom: "Plateau de Fromages Affinés", prix: 14 },
-        { nom: "Tarte Tatin Maison", prix: 12 },
-        { nom: "Crème Brûlée à la Lavande", prix: 12 },
-      ],
-    },
-  },
-  "le passe-temps": {
-    title: "Le Passe-Temps",
-    description:
-      "Le Passe-Temps, un bistrot charmant au cœur de la ville, propose une cuisine fusion avec des produits frais de saison. Dans une atmosphère bohème et intime, découvrez des plats maison accompagnés d'une sélection de vins régionaux et de cocktails artisanaux. Parfait pour des moments délicieux entre amis ou des repas tranquilles en tête-à-tête.",
-    adress: "65 bd de Paris 13003 Marseille",
-    menu: {
-      entrées: [
-        { nom: "salade de chèvre chaud", prix: 8 },
-        { nom: "salade niçoise", prix: 10 },
-        { nom: "salade césar", prix: 12 },
-        { nom: "salade de tomates", prix: 8 },
-      ],
-      plats: [
-        { nom: "Coq au Vin", prix: 28 },
-        { nom: "Cassoulet Maison", prix: 28 },
-      ],
-      desserts: [
-        { nom: "Plateau de Fromages Affinés", prix: 14 },
-        { nom: "Tarte Tatin Maison", prix: 12 },
-        { nom: "Crème Brûlée à la Lavande", prix: 12 },
-      ],
-    },
+  menu: {
+    entrées: [
+      { nom: "salade de chèvre chaud", prix: 8 },
+      { nom: "salade niçoise", prix: 10 },
+      { nom: "salade césar", prix: 12 },
+      { nom: "salade de tomates", prix: 8 },
+    ],
+    plats: [
+      { nom: "Coq au Vin", prix: 28 },
+      { nom: "Cassoulet Maison", prix: 28 },
+    ],
+    desserts: [
+      { nom: "Plateau de Fromages Affinés", prix: 14 },
+      { nom: "Tarte Tatin Maison", prix: 12 },
+      { nom: "Crème Brûlée à la Lavande", prix: 12 },
+    ],
   },
 };
 
 export default function RestaurantDetails() {
-  let { title } = useParams();
-  const resto = RestoDetails[title];
-
+  const { title } = useParams();
   const [liked, setLiked] = useState(false);
+  const [restaurantData, setRestaurantData] = useState(null);
+
+  useEffect(() => {
+    const fetchRestaurantData = async () => {
+      try {
+        const jwtToken = localStorage.getItem("jwtToken");
+        const response = await fetch(`${PATH}/user/restaurants/${title}`, {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${jwtToken}`,
+          },
+        });
+
+        const data = await response.json();
+        setRestaurantData(data.data);
+
+        console.log(data);
+      } catch (error) {
+        console.error("Error fetching restaurant infos:", error);
+      }
+    };
+
+    fetchRestaurantData();
+  }, [title]);
 
   const handleLike = () => {
     setLiked(!liked);
@@ -106,13 +77,13 @@ export default function RestaurantDetails() {
           <BackButton />
         </div>
         <div>
-          <UserMenu />
+          <UserCard />
         </div>
       </div>
       <div className="w-full">
         <img
           src={images[title]}
-          alt=""
+          alt={restaurantData.name}
           className="h-96 w-full object-cover object-center"
         />
       </div>
@@ -122,7 +93,9 @@ export default function RestaurantDetails() {
           <div className="flex flex-col gap-4">
             <div className="flex justify-between w-full px-2 items-center">
               <div>
-                <h2 className="text-3xl uppercase font-bold">{resto.title}</h2>
+                <h2 className="text-3xl uppercase font-bold">
+                  {restaurantData.name}
+                </h2>
               </div>
               <div className="relative">
                 <button onClick={handleLike} className="max-sm:hidden lg:flex">
@@ -134,7 +107,7 @@ export default function RestaurantDetails() {
 
                 <Link to={`/restaurants/${title}/books`}>
                   <button className="max-sm:flex lg:hidden bg-black px-3 pb-1 text-white rounded-xl text-xl">
-                    Reserver
+                    Réserver
                   </button>
                 </Link>
               </div>
@@ -142,24 +115,9 @@ export default function RestaurantDetails() {
 
             <div className="flex items-center my-2 gap-2">
               <img src={pin} className="h-5 w-5" />
-              <p>{resto.adress}</p>
+              <p>{restaurantData.address}</p>
             </div>
-            <p className="text-xl text-justify">{resto.description}</p>
-
-            <div className="flex flex-row gap-2">
-              <div>
-                <Pill tags="Vegan" />
-              </div>
-              <div>
-                <Pill tags="Végétarien" />
-              </div>
-              <div>
-                <Pill tags="Fade" />
-              </div>
-              <div>
-                <Pill tags="Triste" />
-              </div>
-            </div>
+            <p className="text-xl text-justify">{restaurantData.description}</p>
           </div>
 
           <div className="flex flex-col p-5 gap-8 text-xl">
@@ -167,7 +125,7 @@ export default function RestaurantDetails() {
             <div className="ml-5">
               <h3 className="font-semibold">Entrées :</h3>
               <ul className="ml-5">
-                {resto.menu.entrées.map((plat, index) => (
+                {RestoDetails.menu.entrées.map((plat, index) => (
                   <li key={index}>
                     {plat.nom} - {plat.prix} €
                   </li>
@@ -178,7 +136,7 @@ export default function RestaurantDetails() {
             <div className="ml-5">
               <h3 className="font-semibold">Plats :</h3>
               <ul className="ml-5">
-                {resto.menu.plats.map((plat, index) => (
+                {RestoDetails.menu.plats.map((plat, index) => (
                   <li key={index}>
                     {plat.nom} - {plat.prix} €
                   </li>
@@ -188,7 +146,7 @@ export default function RestaurantDetails() {
             <div className="ml-5">
               <h3 className="font-semibold">Desserts :</h3>
               <ul className="ml-5">
-                {resto.menu.desserts.map((plat, index) => (
+                {RestoDetails.menu.desserts.map((plat, index) => (
                   <li key={index}>
                     {plat.nom} - {plat.prix} €
                   </li>

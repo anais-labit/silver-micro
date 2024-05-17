@@ -26,11 +26,7 @@ const BookingModel = {
     onUpdate: "CASCADE",
     onDelete: "CASCADE",
   },
-  start: {
-    type: DataTypes.DATE,
-    allowNull: false,
-  },
-  end: {
+  date: {
     type: DataTypes.DATE,
     allowNull: false,
   },
@@ -73,11 +69,9 @@ module.exports = {
     });
   },
 
-  findUserBookings: (query) => {
+  findAllBookings: (query) => {
     return this.model.findAll({
       where: query,
     });
   },
 };
-
-
