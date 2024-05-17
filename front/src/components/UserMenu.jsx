@@ -5,16 +5,14 @@ import { useEffect, useState } from "react";
 
 const PATH = import.meta.env.VITE_PATH;
 
-
 export default function UserMenu() {
-
   const [userInfo, setUserInfo] = useState(null);
   const [userRole, setUserRole] = useState(null);
 
   useEffect(() => {
     const jwtToken = localStorage.getItem("jwtToken");
     if (jwtToken) {
-      fetch(PATH + "/user", {
+      fetch(`${PATH}/user`, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
@@ -31,7 +29,8 @@ export default function UserMenu() {
           const userDetail = data.data;
           setUserInfo(userDetail.firstName);
           setUserRole(userDetail.role);
-          console.log(userDetail.role)
+
+
 
         })
         .catch((error) => {
@@ -40,29 +39,37 @@ export default function UserMenu() {
     }
   }, []);
 
+  const rolePath = {
+    user: "/user",
+    root: "/root/panel",
+    owner: "/owner/panel"
+  };
+
+  console.log("User Role:", userRole);
+  console.log("Redirect Path:", rolePath[userRole]);
+
   return (
     <>
-      <div className="flex flex-row gap-6  bg-green-100  ">
+      <div className="flex flex-row gap-6 bg-green-100">
         <div>
-
-          <h3 className="font-bold text-3xl "> {userInfo}</h3>
+          <h3 className="font-bold text-3xl">{userInfo}</h3>
         </div>
-
       </div>
       <div className="relative inline-block text-left">
         <div className="group">
           <button type="button" className="" id="options-menu" aria-haspopup="true">
-            <img src={user} alt="" />
+            <img src={user} alt="User" />
           </button>
           <div className="opacity-0 group-hover:opacity-100 transition-opacity duration-150 origin-top-right absolute right-0 mt-2 w-24 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5">
             <div className="py-1" role="menu" aria-orientation="vertical" aria-labelledby="options-menu">
-              <Link to="/user">
-                <button type="submit" className="block w-full text-left px-4 py-2 text-2xl text-gray-700 hover:bg-gray-100" role="menuitem">
-                  Profil
-                </button>
-              </Link>
+              {userRole && (
+                <Link to={rolePath[userRole]}>
+                  <button type="button" className="block w-full text-left px-4 py-2 text-2xl text-gray-700 hover:bg-gray-100" role="menuitem">
+                    Profil
+                  </button>
+                </Link>
+              )}
               <LogoutButton style="block w-full text-left px-4 py-2 text-2xl text-gray-700 hover:bg-gray-100" />
-
             </div>
           </div>
         </div>
