@@ -10,25 +10,20 @@ export default function RestaurantsList() {
 
   return (
     <section>
-
-      <div className='flex justify-end items-end p-5'>
+      <div className="flex justify-end items-end p-5">
         <UserCard />
-
       </div>
-      <div className='flex justify-center items-center m-10'>
-
-        <h2 className='text-5xl font-bold'>Les HappyRest'O</h2>
+      <div className="flex justify-center items-center m-10">
+        <h2 className="text-5xl font-bold">Les HappyRest'O</h2>
       </div>
       <div className="flex justify-center items-center m-10 max-sm:flex-col">
-
-        <div key="passe-temps" >
+        <div key="passe-temps">
           <Link to="/restaurants/passe-temps">
             <Card
               title="le passe-temps"
               img={passetemps}
               adresse="65 bd de Paris"
               codePostal="13003"
-              
             />
           </Link>
         </div>
@@ -40,7 +35,6 @@ export default function RestaurantsList() {
               img={bellavita}
               adresse="65 bd de Paris"
               codePostal="13003"
-              
             />
           </Link>
         </div>
@@ -52,47 +46,43 @@ export default function RestaurantsList() {
               img={traditions}
               adresse="65 bd de Paris"
               codePostal="13003"
-              
             />
           </Link>
         </div>
 
-        <div key="passe-temps" >
+        <div key="resto4">
           <Link to="/restaurants/resto4">
             <Card
               title="le passe-temps"
               img={passetemps}
               adresse="65 bd de Paris"
               codePostal="13003"
-              
             />
           </Link>
         </div>
 
-        <div key="passe-temps" >
+        <div key="resto5">
           <Link to="/restaurants/resto5">
             <Card
               title="le passe-temps"
               img={passetemps}
               adresse="65 bd de Paris"
               codePostal="13003"
-              
             />
           </Link>
         </div>
 
-        <div key="passe-temps" >
+        <div key="resto6">
           <Link to="/restaurants/resto6">
             <Card
               title="le passe-temps"
               img={passetemps}
               adresse="65 bd de Paris"
               codePostal="13003"
-              
             />
           </Link>
         </div>
       </div>
     </section>
-  )
+  );
 }
