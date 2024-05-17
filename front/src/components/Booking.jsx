@@ -54,12 +54,14 @@ export default function Booking() {
 
     useEffect(() => {
         console.log("Réservations mises à jour :", bookings);
-        
+        console.log(selectedDate)
+        console.log(selectedHour)
     }, [bookings]);
 
     const handleDayClick = (date) => {
         setSelectedDate(date);
         setDisplayState("HEURES");
+        
     };
 
     const handleHourClick = (heure) => {
@@ -88,10 +90,10 @@ export default function Booking() {
         // Vérifier si toutes les informations nécessaires ont été sélectionnées
         if (selectedDate && selectedHour && selectedPeople) {
             // Créer un nouvel objet représentant la réservation
-            
+            const isoDate = selectedDate.toISOString();
             // Ajouter la nouvelle réservation à l'état des réservations
             setBookings({...bookings, 
-                date: jours[selectedDate.getDay() - 1] + " " + selectedDate.getDate() + " " + selectedDate.toLocaleString('default', { month: 'long' }),
+                date: isoDate,
                 hour: selectedHour,
                 people: selectedPeople,
                 id : {title}
