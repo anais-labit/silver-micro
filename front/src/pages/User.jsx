@@ -57,10 +57,10 @@ export default function User() {
   }, []);
 
   return (
-    <>
-      <section>
+    
+      <section className="m-10">
         <div className="flex justify-center items-center m-10">
-          <h2 className="text-3xl">Les Rest'O</h2>
+          <h2 className="text-5xl">Les HappyRest'O</h2>
           <LogoutButton />
         </div>
         <div className="flex justify-center items-center m-10">
@@ -70,7 +70,7 @@ export default function User() {
         <div className="overflow-x-auto m-5">
           <table className="w-full table-auto">
             <thead>
-              <tr>
+              <tr className="text-2xl">
                 <th className="border px-4 py-2">Email</th>
                 <th className="border px-4 py-2">Firstname</th>
                 <th className="border px-4 py-2">Lastname</th>
@@ -79,7 +79,7 @@ export default function User() {
             </thead>
             <tbody>
               {userDetails && (
-                <tr>
+                <tr className="text-xl">
                   <td className="border px-4 py-2">{userDetails.email}</td>
                   <td className="border px-4 py-2">{userDetails.firstName}</td>
                   <td className="border px-4 py-2">{userDetails.lastName}</td>
@@ -118,6 +118,6 @@ export default function User() {
           )}
         </div>
       </section>
-    </>
+  
   );
 }

@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import UserMenu from "./UserMenu";
 
 const PATH = import.meta.env.VITE_PATH;
 
@@ -33,10 +34,15 @@ export default function UserCard() {
   }, []);
 
   return (
-    <div className="flex flex-col bg-green-100">
-      <Link to="/user">
+    <div className="flex flex-row gap-6  bg-green-100  ">
+      <div>
+
         <h3 className="font-bold text-3xl "> {userInfo}</h3>
-      </Link>
+      </div>
+
+      <div className="mt-1">
+      < UserMenu />
+      </div>
     </div>
-  );
+  ); 
 }

@@ -2,7 +2,7 @@ import React from "react";
 
 const PATH = import.meta.env.VITE_PATH;
 
-const LogoutButton = () => {
+const LogoutButton = ({style}) => {
 
 
     const handleLogout = () => {
@@ -12,7 +12,7 @@ const LogoutButton = () => {
     };
     
     return (
-        <button onClick={handleLogout}>Logout</button>
+        <button className={style} onClick={handleLogout}>Logout</button>
     );
 
 
