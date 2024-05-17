@@ -13,12 +13,22 @@ const { roles } = require("../config");
 const RestaurantController = require("../restaurants/controllers/RestaurantController");
 
 router.get("/", [IsAuthenticatedMiddleware.check], UserController.getUser);
-router.get("/bookings", [IsAuthenticatedMiddleware.check], BookingController.getUserBookings);
+router.get(
+  "/bookings",
+  [IsAuthenticatedMiddleware.check],
+  BookingController.getUserBookings
+);
 
 router.get(
   "/restaurants/:title",
   [IsAuthenticatedMiddleware.check],
   RestaurantController.getRestaurantByName
+);
+
+router.get(
+  "/restaurants",
+  [IsAuthenticatedMiddleware.check],
+  RestaurantController.getAllRestaurants
 );
 
 
@@ -27,8 +37,6 @@ router.post(
   [IsAuthenticatedMiddleware.check],
   BookingController.createUserBooking
 );
-
-
 
 // router.patch('/update/:userId', [IsAuthenticatedMiddleware.check], UserController.updateUser)
 
@@ -40,6 +48,5 @@ router.post(
 //     ],
 //     UserController.updateUser
 //   );
-
 
 module.exports = router;

@@ -22,7 +22,27 @@ module.exports = {
       user: { userId },
     } = req;
 
-    BookingModel.findUserBookings({ id_user: userId })
+    BookingModel.findAllBookings({ id_user: userId })
+      .then((bookings) => {
+        return res.status(200).json({
+          status: true,
+          data: bookings,
+        });
+      })
+      .catch((err) => {
+        return res.status(500).json({
+          status: false,
+          error: err,
+        });
+      });
+  },
+
+  getRestaurantBookings: (req, res) => {
+    const {
+      restaurant: { restaurantId },
+    } = req;
+
+    BookingModel.findAllBookings({ id_restaurant: restaurantId })
       .then((bookings) => {
         return res.status(200).json({
           status: true,

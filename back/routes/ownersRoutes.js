@@ -18,7 +18,6 @@ router.get(
   RestaurantController.getRestaurant
 );
 
-
 router.get(
   "/panel/bookings",
   [IsAuthenticatedMiddleware.check],

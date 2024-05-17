@@ -23,7 +23,6 @@ export default function User() {
           return response.json();
         })
         .then((data) => {
-          console.log("Fetch result:", data.data);
           const userData = data.data;
           setUserDetails(userData);
         })
@@ -48,7 +47,6 @@ export default function User() {
           return response.json();
         })
         .then((data) => {
-          console.log("Fetch :", data.data);
           const userData = data.data;
           setUserBookings(userData);
         })

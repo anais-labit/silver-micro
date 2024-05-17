@@ -69,11 +69,9 @@ module.exports = {
     });
   },
 
-  findUserBookings: (query) => {
+  findAllBookings: (query) => {
     return this.model.findAll({
       where: query,
     });
   },
 };
-
-

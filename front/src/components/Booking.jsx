@@ -205,7 +205,7 @@ export default function Booking() {
           <div className="flex font-bold text-xl flex-col h-full justify-center">
             <p className="text-center ">
               Réservation confirmée pour {selectedPax} personne(s) le{" "}
-              {formatedDate} à {booking.hour}.
+              {formatedDate} à {selectedHour}.
             </p>
           </div>
         </div>
