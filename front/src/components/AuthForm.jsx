@@ -53,6 +53,9 @@ export default function AuthForm() {
         throw new Error(errorData.error.message);
       }
       console.log("Inscription réussie");
+
+      setShowSignUp(false)
+      setShowSignIn(true)
     } catch (error) {
       console.error("Erreur", error.message);
     }

@@ -1,9 +1,55 @@
 import user from "../assets/user.png";
 import { Link } from "react-router-dom";
 import LogoutButton from "./LogoutButton";
+import { useState, useEffect } from "react";
 
 export default function UserMenu() {
+  const PATH = import.meta.env.VITE_PATH;
+
+
+  const [userInfo, setUserInfo] = useState(null);
+
+  useEffect(() => {
+    const jwtToken = localStorage.getItem("jwtToken");
+    if (jwtToken) {
+      fetch(PATH + "/user", {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${jwtToken}`,
+        },
+      })
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error("An error occurred");
+          }
+          return response.json();
+        })
+        .then((data) => {
+          const userDetail = data.data;
+          setUserInfo(userDetail.firstName);
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+    }
+  }, []);
+
+
+
+
         return (
+
+
+          <>
+          <div className="flex flex-row gap-6  bg-green-100  ">
+          <div>
+            <h3 className="font-bold text-3xl "> {userInfo}</h3>
+          </div>
+    
+
+
+          <div className="mt-1">
           <div className="relative inline-block text-left">
             <div className="group">
               <button type="button" className="" id="options-menu" aria-haspopup="true">
@@ -22,5 +68,11 @@ export default function UserMenu() {
               </div>
             </div>
           </div>
+
+
+          </div>
+        </div>
+
+          </>
         ); 
 }
