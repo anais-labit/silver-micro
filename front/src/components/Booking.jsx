@@ -9,6 +9,11 @@ export default function Booking() {
   const { title } = useParams();
   const [restaurantId, setRestaurantId] = useState(null);
   const [bookings, setBookings] = useState([]);
+  const [bookedHours, setBookedHours] = useState();
+  const [bookedPax, setBookedPax] = useState();
+
+
+
 
   const jours = ["lun", "mar", "mer", "jeu", "ven", "sam", "dim"];
   const heures = [
@@ -31,6 +36,8 @@ export default function Booking() {
   const [selectedHour, setSelectedHour] = useState(null);
   const [selectedPax, setSelectedPax] = useState(null);
   const [isConfirmed, setIsConfirmed] = useState(false);
+
+  
 
   useEffect(() => {
     const fetchRestaurantInfoAndBookings = async () => {
@@ -104,18 +111,24 @@ export default function Booking() {
   const handleBookingConfirm = async (e) => {
     e.preventDefault();
 
-    if (selectedDate && selectedHour && selectedPax) {
-      const adjustedDate = new Date(
-        selectedDate.getTime() - selectedDate.getTimezoneOffset() * 60000
-      );
-      const formatedDBDate =
-        adjustedDate.toISOString().slice(0, 10) + " " + selectedHour;
+    const datePlusHour = () => {
+      
+    
+        const datePart = selectedDate.toISOString().split('T')[0];
+        const concatenatedDates = `${datePart}T${selectedHour}:00.000Z`;
+        setBookedHours(selectedHour);
+        return concatenatedDates;
+      }
+    
 
+
+    if (selectedDate && selectedHour && selectedPax) {
+   
       const bookingPayload = {
         id_user: localStorage.getItem("id"),
         id_restaurant: restaurantId,
-        hour: selectedHour,
-        date: formatedDBDate,
+        hour : selectedHour,
+        date: datePlusHour(),
         pax: selectedPax,
       };
 
@@ -142,6 +155,7 @@ export default function Booking() {
         setSelectedDate(new Date());
         setSelectedHour(null);
         setSelectedPax(null);
+        setBookedPax(selectedPax);
       } catch (error) {
         console.error("Error confirming booking:", error);
       }
@@ -229,8 +243,9 @@ export default function Booking() {
         <div className="p-5 h-full">
           <div className="flex font-bold text-xl flex-col h-full justify-center">
             <p className="text-center ">
-              Réservation confirmée pour {selectedPax} personne(s) le{" "}
-              {formatedDate} à {selectedHour}.
+              Réservation confirmée pour {bookedPax} personne(s) le{" "}
+              {formatedDate} à {bookedHours}.
+
             </p>
           </div>
         </div>
