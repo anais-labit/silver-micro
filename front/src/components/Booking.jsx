@@ -7,6 +7,8 @@ const PATH = import.meta.env.VITE_PATH;
 
 export default function Booking() {
   const { title } = useParams();
+  const [restaurantId, setRestaurantId] = useState(null);
+  const [bookings, setBookings] = useState([]);
 
   const jours = ["lun", "mar", "mer", "jeu", "ven", "sam", "dim"];
   const heures = [
@@ -28,11 +30,10 @@ export default function Booking() {
   const [selectedDate, setSelectedDate] = useState(new Date());
   const [selectedHour, setSelectedHour] = useState(null);
   const [selectedPax, setSelectedPax] = useState(null);
-  const [bookingData, setBookingData] = useState({});
   const [isConfirmed, setIsConfirmed] = useState(false);
 
   useEffect(() => {
-    const fetchRestaurantData = async () => {
+    const fetchRestaurantInfoAndBookings = async () => {
       try {
         const jwtToken = localStorage.getItem("jwtToken");
         const response = await fetch(`${PATH}/user/restaurants/${title}`, {
@@ -44,7 +45,30 @@ export default function Booking() {
 
         const data = await response.json();
         if (data && data.status) {
-          setBookingData(data.data);
+          const restaurantId = data.data.id;
+
+          console.log(data.data);
+          
+          setRestaurantId(restaurantId);
+
+          const bookingsResponse = await fetch(
+            `${PATH}/user/restaurants/${restaurantId}/bookings`,
+            {
+              headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${jwtToken}`,
+              },
+            }
+          );
+
+          const bookingsData = await bookingsResponse.json();
+          console.log("Restaurant Bookings:", bookingsData.data);
+          setBookings(bookingsData.data);
+
+          if (!bookingsResponse.ok) {
+            throw new Error("Error fetching restaurant bookings");
+          }
+
         } else {
           console.error("Failed to fetch restaurant data");
         }
@@ -53,7 +77,7 @@ export default function Booking() {
       }
     };
 
-    fetchRestaurantData();
+    fetchRestaurantInfoAndBookings();
   }, [title]);
 
   const handleDayClick = (date) => {
@@ -92,8 +116,8 @@ export default function Booking() {
 
       const bookingPayload = {
         id_user: localStorage.getItem("id"),
-        id_restaurant: bookingData.id,
-        hour : selectedHour,
+        id_restaurant: restaurantId,
+        hour: selectedHour,
         date: formatedDBDate,
         pax: selectedPax,
       };
@@ -101,7 +125,7 @@ export default function Booking() {
       try {
         const jwtToken = localStorage.getItem("jwtToken");
         const response = await fetch(
-          `${PATH}/user/restaurants/${title}/books`,
+          `${PATH}/user/restaurants/${restaurantId}/books`,
           {
             method: "POST",
             headers: {

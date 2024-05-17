@@ -110,7 +110,6 @@ module.exports = {
   // =======================================================================
   getRestaurantByName: (req, res) => {
   const { title } = req.params;
-  console.log(req.params);
   RestaurantModel.findRestaurant({ name: title })
     .then((restaurant) => {
       if (restaurant) {

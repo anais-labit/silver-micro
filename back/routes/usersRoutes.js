@@ -26,11 +26,16 @@ router.get(
 );
 
 router.get(
+  "/restaurants/:id/bookings",
+  [IsAuthenticatedMiddleware.check],
+  BookingController.getRestaurantBookings
+);
+
+router.get(
   "/restaurants",
   [IsAuthenticatedMiddleware.check],
   RestaurantController.getAllRestaurants
 );
-
 
 router.post(
   "/restaurants/:title/books",

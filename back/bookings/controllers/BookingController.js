@@ -38,11 +38,11 @@ module.exports = {
   },
 
   getRestaurantBookings: (req, res) => {
-    const {
-      restaurant: { restaurantId },
-    } = req;
+    const restaurantId = req.params;
 
-    BookingModel.findAllBookings({ id_restaurant: restaurantId })
+    const parsedRestaurantId = parseInt(restaurantId.id);
+
+    BookingModel.findAllBookings({ id_restaurant: parsedRestaurantId })
       .then((bookings) => {
         return res.status(200).json({
           status: true,
