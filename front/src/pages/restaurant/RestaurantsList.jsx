@@ -1,6 +1,7 @@
 import Card from "../../components/Card";
 import passetemps from "../../assets/restoimg/passe-temps.jpg";
 import bellavita from "../../assets/restoimg/bellavita.jpg";
+import random from "../../assets/restoimg/random.jpg";
 import traditions from "../../assets/restoimg/traditions.jpg";
 import { Link } from "react-router-dom";
 import UserMenu from "../../components/UserMenu";
@@ -15,6 +16,7 @@ const imageMapping = {
 
 export default function RestaurantsList() {
   const [restaurantsData, setrestaurantsData] = useState([]);
+  const [tags, setTags] = useState([])
 
   useEffect(() => {
     const jwtToken = localStorage.getItem("jwtToken");
@@ -34,8 +36,12 @@ export default function RestaurantsList() {
           return response.json();
         })
         .then((data) => {
-          const fetchData = data.data;
-          console.log("Fetch result:", fetchData);
+
+
+          const fetchData = data.data.map(restaurant => ({
+            ...restaurant,
+            tags: JSON.parse(restaurant.tags), // Analyser les tags ici
+          }));
           setrestaurantsData(fetchData);
         })
         .catch((error) =>
@@ -55,10 +61,14 @@ export default function RestaurantsList() {
         <h2 className="text-5xl font-bold">Les HappyRest'O</h2>
       </div>
 
-      {restaurantsData.map((restaurant) => {
-        console.log(restaurant.name);
+      <div className="flex justify-center  " >
 
-        const restaurantImage = imageMapping[restaurant.name] || passetemps; 
+
+      {restaurantsData.map((restaurant) => {
+
+        const jsonTags = restaurant.tags;
+        console.log(jsonTags)
+        const restaurantImage = imageMapping[restaurant.name] || random; 
 
         return (
           <div className="flex justify-center items-center m-10 max-sm:flex-col" key={restaurant.id}>
@@ -68,12 +78,15 @@ export default function RestaurantsList() {
                   title={restaurant.name}
                   img={restaurantImage}
                   adresse={restaurant.address}
+                  tags={jsonTags}
                 />
               </Link>
             </div>
           </div>
         );
       })}
+
+            </div>
     </section>
   );
 }

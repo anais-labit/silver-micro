@@ -28,10 +28,10 @@ const RestaurantModel = {
     type: DataTypes.JSON,
     allowNull: true,
   },
-  // rate: {
-  //   type: DataTypes.FLOAT,
-  //   allowNull: true,
-  // },
+  tags: {
+    type: DataTypes.JSON,
+    allowNull: true,
+  },
   id_owner: {
     type: DataTypes.INTEGER,
     allowNull: false,
