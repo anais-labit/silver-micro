@@ -8,8 +8,6 @@ import passetemps2 from "../../assets/restoimg/passe-temps2.jpg";
 import heart from "../../assets/heart.png";
 import heartLiked from "../../assets/liked.png";
 import pin from "../../assets/marqueur.png";
-import UserMenu from "../../components/UserMenu";
-import Pill from "../../components/Pill";
 
 const images = {
   traditions: traditions2,

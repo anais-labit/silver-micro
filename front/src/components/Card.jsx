@@ -13,10 +13,13 @@ export default function Card({ title, img, adresse, note, prixMoyen, tags }) {
                 <div className="flex flex-col">
                     <p className="text-balance text-l ">{adresse}</p>
                 </div>
-                <div className="flex justify-between">
+                <div className="flex justify-between ">
                     <p>{note}</p>
                     <p>{prixMoyen}</p>
-                    <Pill tags = {tags} />
+                </div>
+                <div className="flex flex-row justify-center gap-2">
+                <Pill tags = {tags} />
+
                 </div>
             </div>
         </div>

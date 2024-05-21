@@ -78,6 +78,8 @@ export default function RestaurantsList() {
                   title={restaurant.name}
                   img={restaurantImage}
                   adresse={restaurant.address}
+                  note="4.5/5"
+                  prixMoyen= "25€"
                   tags={jsonTags}
                 />
               </Link>
