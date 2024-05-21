@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
+import "../assets/css/styles.css";
 import { useParams } from "react-router-dom";
 
 const PATH = import.meta.env.VITE_PATH;
@@ -16,6 +17,8 @@ export default function Booking() {
     const [isConfirmed, setIsConfirmed] = useState(false);
     const [bookedPax, setBookedPax] = useState();
     const [confirmationDate, setConfirmationDate] = useState(null);
+    const [bookingsData, setBookingsData] = useState(null);
+
 
     const jours = ["dim", "lun", "mar", "mer", "jeu", "ven", "sam"];
     const heures = ["12:00", "12:30", "13:00", "13:30", "14:00", "19:00", "19:30", "20:00", "20:30", "21:00", "21:30"];
@@ -46,8 +49,8 @@ export default function Booking() {
                             },
                         }
                     );
-
                     const bookingsData = await bookingsResponse.json();
+                    setBookingsData(bookingsData);
                     console.log("Restaurant Bookings:", bookingsData.data);
 
                     if (!bookingsResponse.ok) {
@@ -63,6 +66,17 @@ export default function Booking() {
 
         fetchRestaurantInfoAndBookings();
     }, [title]);
+
+    console.log(bookingsData);
+
+    const isDateUnavailable = (date) => {
+      if (!bookingsData || !bookingsData.data) return false;
+      return bookingsData.data.some((booking) => {
+        const bookingDate = new Date(booking.date);
+        return bookingDate.toDateString() === date.toDateString();
+      });
+    };
+
 
     const handleDayClick = (date) => {
         setSelectedDate(date);
@@ -140,69 +154,94 @@ export default function Booking() {
         : "";
 
     return (
-        <section className="max-sm:w-full lg:w-[420px] lg:rounded-lg h-[490px] bg-white relative shadow-lg">
-            {!isConfirmed && (
-                <div className="grid grid-cols-3 justify-center items-center gap-4 m-8">
-                    <button onClick={() => handleButtonClick("JOURS")}>
-                        <div className="border-2 p-2 flex justify-center uppercase">
-                            {formatedDate}
-                        </div>
-                    </button>
-                    <button onClick={() => handleButtonClick("HEURES")}>
-                        <div className="border-2 p-2 flex justify-center">
-                            {selectedHour || "HEURES"}
-                        </div>
-                    </button>
-                    <button onClick={() => handleButtonClick("pax")}>
-                        <div className="border-2 p-2 flex justify-center">
-                            {selectedPax || "PERS"}
-                        </div>
-                    </button>
-                </div>
-            )}
-            {!isConfirmed && displayState === "JOURS" && (
-                <div className="m-5 mt-12 flex justify-center">
-                    <Calendar onChange={(date) => handleDayClick(date)} value={selectedDate} />
-                </div>
-            )}
-            {!isConfirmed && displayState === "HEURES" && (
-                <div className="m-5 mt-16">
-                    <div className="grid grid-cols-3 gap-4">
-                        {heures.map((heure, heureIndex) => (
-                            <button className="border-black border-2" onClick={() => handleHourClick(heure)} key={heureIndex}>
-                                {heure}
-                            </button>
-                        ))}
-                    </div>
-                </div>
-            )}
-            {!isConfirmed && displayState === "pax" && (
-                <div className="m-5 mt-16">
-                    <div className="m-5 grid grid-cols-4 gap-4">
-                        {pax.map((personne, personneIndex) => (
-                            <button className="border-black border-2" onClick={() => setSelectedPax(personne)} key={personneIndex}>
-                                {personne}
-                            </button>
-                        ))}
-                    </div>
-                </div>
-            )}
-            {isConfirmed && (
-                <div className="p-5 h-full">
-                    <div className="flex font-bold text-xl flex-col h-full justify-center">
-                        <p className="text-center">
-                            Réservation confirmée pour {bookedPax} personne(s) le {confirmationFormatedDate} à {bookedHours}.
-                        </p>
-                    </div>
-                </div>
-            )}
-            {!isConfirmed && selectedDate && selectedHour && selectedPax && (
-                <div className="absolute p-5 inset-x-0 bottom-0">
-                    <button onClick={handleBookingConfirm} className="bg-black px-3 pb-1 text-white rounded-xl text-xl w-full">
-                        Confirmer la réservation
-                    </button>
-                </div>
-            )}
-        </section>
+      <section className="max-sm:w-full lg:w-[420px] lg:rounded-lg h-[490px] bg-white relative shadow-lg">
+        {!isConfirmed && (
+          <div className="grid grid-cols-3 justify-center items-center gap-4 m-8">
+            <button onClick={() => handleButtonClick("JOURS")}>
+              <div className="border-2 p-2 flex justify-center uppercase">
+                {formatedDate}
+              </div>
+            </button>
+            <button onClick={() => handleButtonClick("HEURES")}>
+              <div className="border-2 p-2 flex justify-center">
+                {selectedHour || "HEURES"}
+              </div>
+            </button>
+            <button onClick={() => handleButtonClick("pax")}>
+              <div className="border-2 p-2 flex justify-center">
+                {selectedPax || "PERS"}
+              </div>
+            </button>
+          </div>
+        )}
+        {!isConfirmed && displayState === "JOURS" && (
+          <div className="m-5 mt-12 flex justify-center">
+            {/* <Calendar
+              onChange={(date) => handleDayClick(date)}
+              value={selectedDate}
+            /> */}
+            <Calendar
+              onChange={(date) => handleDayClick(date)}
+              value={selectedDate}
+              tileClassName={({ date, view }) => {
+                if (view === "month") {
+                  // Apply the 'unavailable' class if the date is unavailable
+                  return isDateUnavailable(date) ? "unavailable" : null;
+                }
+              }}
+            />
+          </div>
+        )}
+        {!isConfirmed && displayState === "HEURES" && (
+          <div className="m-5 mt-16">
+            <div className="grid grid-cols-3 gap-4">
+              {heures.map((heure, heureIndex) => (
+                <button
+                  className="border-black border-2"
+                  onClick={() => handleHourClick(heure)}
+                  key={heureIndex}
+                >
+                  {heure}
+                </button>
+              ))}
+            </div>
+          </div>
+        )}
+        {!isConfirmed && displayState === "pax" && (
+          <div className="m-5 mt-16">
+            <div className="m-5 grid grid-cols-4 gap-4">
+              {pax.map((personne, personneIndex) => (
+                <button
+                  className="border-black border-2"
+                  onClick={() => setSelectedPax(personne)}
+                  key={personneIndex}
+                >
+                  {personne}
+                </button>
+              ))}
+            </div>
+          </div>
+        )}
+        {isConfirmed && (
+          <div className="p-5 h-full">
+            <div className="flex font-bold text-xl flex-col h-full justify-center">
+              <p className="text-center">
+                Réservation confirmée pour {bookedPax} personne(s) le{" "}
+                {confirmationFormatedDate} à {bookedHours}.
+              </p>
+            </div>
+          </div>
+        )}
+        {!isConfirmed && selectedDate && selectedHour && selectedPax && (
+          <div className="absolute p-5 inset-x-0 bottom-0">
+            <button
+              onClick={handleBookingConfirm}
+              className="bg-black px-3 pb-1 text-white rounded-xl text-xl w-full"
+            >
+              Confirmer la réservation
+            </button>
+          </div>
+        )}
+      </section>
     );
 }
