@@ -14,10 +14,10 @@ export default function Card({ title, img, adresse, note, prixMoyen, tags }) {
                     <p className="text-balance text-l ">{adresse}</p>
                 </div>
                 <div className="flex justify-between ">
-                    <p>{note}</p>
+                    <p className="w-1/2 mx-auto">{note}</p>
                     <p>{prixMoyen}</p>
                 </div>
-                <div className="flex flex-row justify-center gap-2">
+                <div className="flex flex-row gap-2">
                 <Pill tags = {tags} />
 
                 </div>
