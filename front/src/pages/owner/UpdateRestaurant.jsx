@@ -96,74 +96,68 @@ export default function UpdateRestaurant() {
 	};
 
 	return (
-		<section className="flex flex-col items-center">
-			<div className="flex w-full justify-between p-5">
-				<div>
-					{" "}
-					<OwnerBackButton />
-				</div>
-				<div>
-					<UserMenu />
-				</div>
+		<section className="min-h-screen bg-gray-100 p-6 flex flex-col items-center">
+			<div className="flex w-full justify-between p-5 bg-white shadow-md rounded-md">
+				<OwnerBackButton />
+				<UserMenu />
 			</div>
-			<div>
-				<h2>
-					Renseigner les informations de votre restaurant :{" "}
-					{restaurantData?.name}
-				</h2>
+			<div className="mt-8 mb-4 text-2xl font-semibold text-gray-800">
+				Renseigner les informations de votre restaurant : {restaurantData?.name}
 			</div>
-			<form
-				className="flex flex-col justify-center items-center"
-				onSubmit={handleUpdateRestaurantSubmit}>
-				<div className="flex flex-row items-center space-y-2 relative">
-					<FormInput
-						type="text"
-						placeholder={restaurantData?.name || "Name"}
-						name="name"
-						onChange={handleUpdateRestaurant}
-						value={restaurantData?.name}
-					/>
-				</div>
-				<div className="flex flex-row items-center space-y-2 relative">
-					<FormInput
-						type="number"
-						placeholder={restaurantData?.pax_capacity || "Pax capacity"}
-						name="pax_capacity"
-						onChange={handleUpdateRestaurant}
-						value={restaurantData?.pax_capacity}
-					/>
-				</div>
-				<div className="flex flex-row items-center space-y-2 relative">
-					<FormInput
-						type="text"
-						placeholder={restaurantData?.address || "Address"}
-						name="address"
-						onChange={handleUpdateRestaurant}
-						value={restaurantData?.address}
-					/>
-				</div>
-				<div className="flex flex-row items-center space-y-2 relative">
-					<FormInput
-						type="text"
-						placeholder={restaurantData?.description || "description"}
-						name="description"
-						onChange={handleUpdateRestaurant}
-						value={restaurantData?.description}
-					/>
-				</div>
-				<div className="flex flex-row items-center space-y-2 relative">
-					<FormInput
-						type="text"
-						placeholder={restaurantData?.menu || "menu"}
-						name="menu"
-						onChange={handleUpdateRestaurant}
-						value={restaurantData?.menu}
-					/>
-				</div>
-				<div className="flex items-center space-y-4 w-full pt-4">
-					<ValidateButton className="space-y-2" label="Enregister" />
-				</div>
-			</form>
+			<div className="flex flex-col items-center space-y-2 py-6">
+				<form
+					className="bg-white shadow-md rounded-md p-20 w-full max-w-lg"
+					onSubmit={handleUpdateRestaurantSubmit}>
+					<div className="mb-4">
+						<FormInput
+							type="text"
+							placeholder={restaurantData?.name || "Nom"}
+							name="name"
+							onChange={handleUpdateRestaurant}
+							value={updateRestaurantForm.name}
+						/>
+					</div>
+					<div className="mb-4">
+						<FormInput
+							type="number"
+							placeholder={restaurantData?.pax_capacity || "Capacité"}
+							name="pax_capacity"
+							onChange={handleUpdateRestaurant}
+							value={updateRestaurantForm.pax_capacity}
+						/>
+					</div>
+					<div className="mb-4">
+						<FormInput
+							type="text"
+							placeholder={restaurantData?.address || "Adresse"}
+							name="address"
+							onChange={handleUpdateRestaurant}
+							value={updateRestaurantForm.address}
+						/>
+					</div>
+					<div className="mb-4">
+						<FormInput
+							type="text"
+							placeholder={restaurantData?.description || "Description"}
+							name="description"
+							onChange={handleUpdateRestaurant}
+							value={updateRestaurantForm.description}
+						/>
+					</div>
+					<div className="mb-4">
+						<FormInput
+							type="text"
+							placeholder={restaurantData?.menu || "Menu"}
+							name="menu"
+							onChange={handleUpdateRestaurant}
+							value={updateRestaurantForm.menu}
+						/>
+					</div>
+					<div className="flex justify-end">
+						<ValidateButton label="Enregistrer" />
+					</div>
+				</form>
+			</div>
 		</section>
 	);
 }

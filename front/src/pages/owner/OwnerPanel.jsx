@@ -77,17 +77,15 @@ export default function OwnerPanel() {
 
 	return (
 		<section className="min-h-screen bg-gray-100 p-6 flex flex-col items-center">
-			<div className="flex w-full justify-between p-5 bg-white shadow-md rounded-md">
-				<div>
-					<div className="text-2xl font-semibold text-gray-800">
-						{showRestaurants
-							? "Gestion des Restaurants"
-							: "Gestion des Réservations"}
-					</div>
+			<div className="flex w-full justify-between items-center p-5 bg-white shadow-md rounded-md">
+				<div className="text-2xl font-semibold text-gray-800">
+					{showRestaurants
+						? "Gestion des Restaurants"
+						: "Gestion des Réservations"}
 				</div>
 				<UserMenu />
 			</div>
-			<div className="flex justify-between items-center mt-8 w-full max-w-8xl">
+			<div className="flex items-center mt-8 w-full max-w-6xl">
 				<button
 					onClick={handleToggleView}
 					className="bg-blue-500 text-white px-4 py-2 rounded-md shadow-md hover:bg-blue-600 transition">
@@ -95,8 +93,10 @@ export default function OwnerPanel() {
 						? "Voir la liste des bookings"
 						: "Voir la liste des restaurants"}
 				</button>
+				<div className="ml-4"></div>
 			</div>
-			<div className="mt-8 bg-white shadow-md rounded-md p-6 w-full max-w-8xl">
+
+			<div className="mt-8 bg-white shadow-md rounded-md p-6 w-full max-w-6xl">
 				{showRestaurants ? (
 					<div className="overflow-x-auto">
 						<table className="w-full table-auto">
@@ -113,9 +113,14 @@ export default function OwnerPanel() {
 										className="hover:bg-gray-100 transition">
 										<td className="border px-4 py-2">{restaurant.name}</td>
 										<td className="border px-4 py-2">
+											<Link to={`/restaurants/${restaurant.name}`}>
+												<button className="bg-blue-500 text-white px-2 py-1 rounded-md hover:bg-blue-600 transition">
+													Voir
+												</button>
+											</Link>
 											<button
 												onClick={() => handleEdit(restaurant.id)}
-												className="bg-yellow-500 text-white px-2 py-1 rounded-md hover:bg-yellow-600 transition">
+												className="bg-yellow-500 text-white px-2 py-1 rounded-md ml-2 hover:bg-yellow-600 transition">
 												Modifier
 											</button>
 											<button

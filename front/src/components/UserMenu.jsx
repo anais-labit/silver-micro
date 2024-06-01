@@ -73,7 +73,7 @@ export default function UserMenu() {
 												type="submit"
 												className="block w-full text-left px-4 py-2 text-xl text-gray-700 hover:bg-gray-100"
 												role="menuitem">
-												Voir les restaurants
+												Les HappyRest'O
 											</button>
 										</Link>
 									)}

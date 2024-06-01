@@ -69,8 +69,8 @@ export default function RootPanel() {
 
 	return (
 		<>
-			<section className="min-h-screen bg-gray-100 p-6">
-				<div className="flex justify-between items-center p-5 bg-white shadow-md rounded-md">
+			<section className="min-h-screen bg-gray-100 p-6 flex flex-col items-center">
+				<div className="flex w-full justify-between items-center p-5 bg-white shadow-md rounded-md">
 					<div className="text-2xl font-semibold text-gray-800">
 						{showRestaurants
 							? "Gestion des Restaurants"
@@ -80,7 +80,7 @@ export default function RootPanel() {
 						<UserMenu />
 					</div>
 				</div>
-				<div className="flex left items-center mt-8 ">
+				<div className="flex items-center mt-8 w-full max-w-6xl">
 					<button
 						onClick={handleToggleView}
 						className="bg-blue-500 text-white px-4 py-2 rounded-md shadow-md hover:bg-blue-600 transition">
@@ -95,7 +95,7 @@ export default function RootPanel() {
 						/>
 					</div>
 				</div>
-				<div className="mt-8 bg-white shadow-md rounded-md p-6">
+				<div className="mt-8 bg-white shadow-md rounded-md p-6 w-full max-w-6xl">
 					{showRestaurants ? (
 						<div className="overflow-x-auto">
 							<table className="w-full table-auto">
