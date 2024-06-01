@@ -1,4 +1,6 @@
 import { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
+
 import AddButton from "../../components/AddButton";
 import UserMenu from "../../components/UserMenu";
 
@@ -116,11 +118,16 @@ export default function RootPanel() {
 												{restaurant.id_owner}
 											</td>
 											<td className="border px-4 py-2">
-												<button
+												{/* <button
 													onClick={() => handleEdit(restaurant.id)}
 													className="bg-yellow-500 text-white px-2 py-1 rounded-md hover:bg-yellow-600 transition">
 													Modifier
-												</button>
+												</button> */}
+												<Link to={`/restaurants/${restaurant.name}`}>
+													<button className="bg-blue-500 text-white px-2 py-1 rounded-md hover:bg-blue-600 transition">
+														Voir
+													</button>
+												</Link>
 												<button
 													onClick={() => handleDelete(restaurant.id)}
 													className="bg-red-500 text-white px-2 py-1 rounded-md ml-2 hover:bg-red-600 transition">
