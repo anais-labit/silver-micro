@@ -36,14 +36,13 @@ export default function RestaurantsList() {
 					return response.json();
 				})
 				.then((data) => {
-					console.log("Fetched data:", data); // Vérifier les données reçues
 					const fetchData = data.data.map((restaurant) => ({
 						...restaurant,
 						tags: restaurant.tags
 							? Array.isArray(restaurant.tags)
 								? restaurant.tags
 								: [restaurant.tags]
-							: [], // Assurer que tags est une liste
+							: [], 
 					}));
 					setrestaurantsData(fetchData);
 				})
@@ -68,7 +67,6 @@ export default function RestaurantsList() {
 				{restaurantsData.length > 0 ? (
 					restaurantsData.map((restaurant) => {
 						const jsonTags = restaurant.tags;
-						console.log("Restaurant tags:", jsonTags);
 						const restaurantImage = imageMapping[restaurant.name] || random;
 
 						return (
