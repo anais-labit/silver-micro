@@ -3,11 +3,10 @@ export default function AddButton({ type, onClick }) {
     type === "restaurant" ? "Ajouter un restaurant" : "Ajouter un utilisateur";
 
   return (
-    <button
-      className="bg-black px-3 pb-1 text-white rounded-xl text-xl w-full"
-      onClick={onClick}
-    >
-      {label}
-    </button>
-  );
+		<button
+			className="bg-green-500 text-white px-4 py-2 rounded-md shadow-md hover:bg-green-600 transition"
+			onClick={onClick}>
+			{label}
+		</button>
+	);
 }
