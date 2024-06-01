@@ -4,8 +4,11 @@ import FormInput from "../../components/FormInput";
 import ValidateButton from "../../components/ValidateButton";
 import OwnerBackButton from "../../components/OwnerBackButton";
 import UserMenu from "../../components/UserMenu";
+import Swal from "sweetalert2";
+import withReactContent from "sweetalert2-react-content";
 
 const PATH = import.meta.env.VITE_PATH;
+const MySwal = withReactContent(Swal);
 
 export default function UpdateRestaurant() {
 	const { restaurantId } = useParams();
@@ -85,12 +88,28 @@ export default function UpdateRestaurant() {
 				}
 			);
 
-			const errorData = await response.json();
-			if (errorData.status === false) {
-				throw new Error(errorData.error.message);
+			const data = await response.json();
+
+			if (data.status === false) {
+				throw new Error(data.error.message);
 			}
 			console.log("Mise à jour du restaurant réussie");
+
+			MySwal.fire({
+				icon: "success",
+				title: "Mise à jour réussie !",
+				html: `Les informations du restaurant <strong>${data.data.name}</strong> ont été mises à jour avec succès.`,
+			});
+
+			setTimeout(() => {
+				window.location.href = "/owner/panel"; 
+			}, 3500);
 		} catch (error) {
+			MySwal.fire({
+				icon: "error",
+				title: "Erreur",
+				text: error.message,
+			});
 			console.error("Erreur", error.message);
 		}
 	};

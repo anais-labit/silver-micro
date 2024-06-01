@@ -3,8 +3,11 @@ import FormInput from "../../components/FormInput";
 import ValidateButton from "../../components/ValidateButton";
 import RootBackButton from "../../components/RootBackButton";
 import UserMenu from "../../components/UserMenu";
+import Swal from "sweetalert2";
+import withReactContent from "sweetalert2-react-content";
 
 const PATH = import.meta.env.VITE_PATH;
+const MySwal = withReactContent(Swal);
 
 export default function CreateRestaurant() {
 	const [createRestaurantForm, setCreateRestaurantForm] = useState({
@@ -36,12 +39,28 @@ export default function CreateRestaurant() {
 				body: JSON.stringify(createRestaurantForm),
 			});
 
-			const errorData = await response.json();
-			if (errorData.status === false) {
-				throw new Error(errorData.error.message);
+			const data = await response.json();
+
+			if (data.status === false) {
+				throw new Error(data.error.message);
 			}
 			console.log("Création de restaurant réussie");
+
+			MySwal.fire({
+				icon: "success",
+				title: "C'est fait !",
+				html: `Le restaurant <strong>${data.data.name}</strong> a été créé avec succès.`,
+			});
+
+			setTimeout(() => {
+				window.location.href = "/root/panel";
+			}, 2000);
 		} catch (error) {
+			MySwal.fire({
+				icon: "error",
+				title: "Erreur",
+				text: error.message,
+			});
 			console.error("Erreur", error.message);
 		}
 	};

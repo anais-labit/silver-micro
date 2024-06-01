@@ -4,8 +4,11 @@ import ValidateButton from "../../components/ValidateButton";
 import RootBackButton from "../../components/RootBackButton";
 import SelectInput from "../../components/Select";
 import UserMenu from "../../components/UserMenu";
+import Swal from "sweetalert2";
+import withReactContent from "sweetalert2-react-content";
 
 const PATH = import.meta.env.VITE_PATH;
+const MySwal = withReactContent(Swal);
 
 export default function CreateUser() {
 	const [createUserForm, setCreateUserForm] = useState({
@@ -36,12 +39,26 @@ export default function CreateUser() {
 				body: JSON.stringify(createUserForm),
 			});
 
-			const errorData = await response.json();
-			if (errorData.status === false) {
-				throw new Error(errorData.error.message);
+			const data = await response.json();
+
+			if (data.status === false) {
+				throw new Error(data.error.message);
 			}
-			console.log("Création d'utilisateur réussie");
+			MySwal.fire({
+				icon: "success",
+				title: "C'est fait !",
+				html: `Une notification a été envoyée à <strong>${data.data.user.email}</strong>`,
+			});
+
+			setTimeout(() => {
+				window.location.href = "/root/panel"; 
+			}, 3500);
 		} catch (error) {
+			MySwal.fire({
+				icon: "error",
+				title: "Erreur",
+				text: error.message,
+			});
 			console.error("Erreur", error.message);
 		}
 	};
