@@ -76,7 +76,7 @@ export default function RestaurantsList() {
 								className="flex justify-center items-center m-10 max-sm:flex-col"
 								key={restaurant.id}>
 								<div>
-									<Link to={`/restaurants/${restaurant.slug}`}>
+									<Link to={`/restaurants/${restaurant.name}`}>
 										<Card
 											title={restaurant.name}
 											img={restaurantImage}

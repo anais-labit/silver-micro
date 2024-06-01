@@ -51,8 +51,6 @@ export default function Booking() {
                     );
                     const bookingsData = await bookingsResponse.json();
                     setBookingsData(bookingsData);
-                    console.log("Restaurant Bookings:", bookingsData.data);
-
                     if (!bookingsResponse.ok) {
                         throw new Error("Error fetching restaurant bookings");
                     }
@@ -66,8 +64,6 @@ export default function Booking() {
 
         fetchRestaurantInfoAndBookings();
     }, [title]);
-
-    console.log(bookingsData);
 
     const isDateUnavailable = (date) => {
       if (!bookingsData || !bookingsData.data) return false;
