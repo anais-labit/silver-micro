@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useParams, Link } from "react-router-dom";
 import BackButton from "../../components/BackButton";
 import Booking from "../../components/Booking";
+import UserCard from "../../components/UserCard";
 import traditions2 from "../../assets/restoimg/traditions2.jpg";
 import bellavita2 from "../../assets/restoimg/bellavita2.jpg";
 import passetemps2 from "../../assets/restoimg/passe-temps2.jpg";
