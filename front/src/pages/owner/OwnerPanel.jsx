@@ -65,7 +65,8 @@ export default function OwnerPanel() {
   };
 
   return (
-    <>
+  
+    
       <section>
         <div className="flex justify-center items-center m-10">
           <h2 className="text-3xl">Les Rest'O</h2>
@@ -140,6 +141,6 @@ export default function OwnerPanel() {
           </div>
         )}
       </section>
-    </>
+    
   );
 }

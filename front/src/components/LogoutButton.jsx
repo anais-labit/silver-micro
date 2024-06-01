@@ -1,18 +1,19 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 
 const PATH = import.meta.env.VITE_PATH;
-
-const LogoutButton = () => {
-
+const LogoutButton = ({style}) => {
+    
+    const navigate = useNavigate()
 
     const handleLogout = () => {
         localStorage.clear();
-        window.location.reload(PATH);
+        navigate("/")
         console.log(localStorage.getItem("user"));
     };
     
     return (
-        <button onClick={handleLogout}>Logout</button>
+        <button className={style} onClick={handleLogout}>Logout</button>
     );
 
 

@@ -4,7 +4,7 @@ import ValidateButton from "./ValidateButton";
 import userImg from "../assets/user.png";
 import lockImg from "../assets/lock.png";
 import mailImg from "../assets/mail.png";
-
+import { useNavigate } from "react-router-dom";
 const PATH = import.meta.env.VITE_PATH;
 
 export default function AuthForm() {
@@ -22,6 +22,7 @@ export default function AuthForm() {
     password: "",
     confPwd: "",
   });
+  const navigate = useNavigate(); // Initialisation de navigate au niveau supérieur du composant
 
   const handleSignUp = (e) => {
     const { name, value } = e.target;
@@ -53,6 +54,9 @@ export default function AuthForm() {
         throw new Error(errorData.error.message);
       }
       console.log("Inscription réussie");
+
+      setShowSignUp(false)
+      setShowSignIn(true)
     } catch (error) {
       console.error("Erreur", error.message);
     }
@@ -104,6 +108,9 @@ export default function AuthForm() {
       // setToken(token);
 
       console.log("Connexion réussie");
+
+      navigate("/restaurants");
+
     } catch (error) {
       console.error("Erreur", error.message);
     }

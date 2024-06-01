@@ -8,9 +8,6 @@ import passetemps2 from "../../assets/restoimg/passe-temps2.jpg";
 import heart from "../../assets/heart.png";
 import heartLiked from "../../assets/liked.png";
 import pin from "../../assets/marqueur.png";
-import UserCard from "../../components/UserCard";
-
-const PATH = import.meta.env.VITE_PATH;
 
 const images = {
   traditions: traditions2,
@@ -68,11 +65,8 @@ export default function RestaurantDetails() {
 
   const handleLike = () => {
     setLiked(!liked);
+    console.log("liked", liked);
   };
-
-  if (!restaurantData) {
-    return <p>Loading...</p>;
-  }
 
   return (
     <section>
