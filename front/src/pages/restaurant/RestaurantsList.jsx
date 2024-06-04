@@ -42,7 +42,7 @@ export default function RestaurantsList() {
 							? Array.isArray(restaurant.tags)
 								? restaurant.tags
 								: [restaurant.tags]
-							: [], 
+							: [],
 					}));
 					setrestaurantsData(fetchData);
 				})
@@ -63,27 +63,23 @@ export default function RestaurantsList() {
 				<h2 className="text-5xl font-bold">Les HappyRest'O</h2>
 			</div>
 
-			<div className="flex justify-center">
+			<div className="flex items-center justify-center max-sm:flex-col">
 				{restaurantsData.length > 0 ? (
 					restaurantsData.map((restaurant) => {
 						const jsonTags = restaurant.tags;
 						const restaurantImage = imageMapping[restaurant.name] || random;
 
 						return (
-							<div
-								className="flex justify-center items-center m-10 max-sm:flex-col"
-								key={restaurant.id}>
-								<div>
-									<Link to={`/restaurants/${restaurant.name}`}>
-										<Card
-											title={restaurant.name}
-											img={restaurantImage}
-											adresse={restaurant.address}
-											// note="4.5/5"
-											tags={jsonTags}
-										/>
-									</Link>
-								</div>
+							<div className="flex max-sm:m-5 lg:m-10" key={restaurant.id}>
+								<Link to={`/restaurants/${restaurant.name}`}>
+									<Card
+										title={restaurant.name}
+										img={restaurantImage}
+										adresse={restaurant.address}
+										// note="4.5/5"
+										tags={jsonTags}
+									/>
+								</Link>
 							</div>
 						);
 					})
